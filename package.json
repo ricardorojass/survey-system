@@ -4,7 +4,18 @@
   "description": "Survey system inspired in Google forms",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "tslint --project '.'",
+    "compile": "tsc",
+    "build": "npm run compile && npx webpack -p",
+    "start": "node dist/server/index.js",
+    "start:dev": "nodemon --config \"./nodemon.json\"/",
+    "start:test": "NODE_ENV=test PORT=4444 nodemon --config \"./nodemon.json\"/",
+    "db:seed": "knex seed:run",
+    "db:reset": "npx ts-node db/reset.ts",
+    "db:reset:test": "NODE_ENV=test npx ts-node db/reset.ts",
+    "db:migrate": "knex migrate:latest",
+    "db:migrate:test": "NODE_ENV=test knex migrate:latest",
+    "test:system": "NODE_ENV=test jest --detectOpenHandles --forceExit --runInBand --testPathPattern /tests/system/"
   },
   "keywords": [
     "nodejs",
@@ -13,5 +24,37 @@
     "forms"
   ],
   "author": "Ricardo Rojas",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcrypt": "^5.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.1",
+    "objection": "^2.2.1",
+    "pg": "^8.2.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/express": "^4.17.7",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/node": "^14.0.19",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "dotenv": "^8.2.0",
+    "flexboxgrid": "^6.3.1",
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.4",
+    "postcss-loader": "^3.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "ts-lint": "^4.5.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-middleware": "^3.7.2"
+  }
 }
