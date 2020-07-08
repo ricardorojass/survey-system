@@ -10,7 +10,7 @@ const isDev = process.env.NODE_ENV != 'production'
 app.use(express.json())
 // app.use(express.static(path.resolve(__dirname, '../client')))
 
-// app.use(setUser)
+app.use(setUser)
 app.use('/api', routes)
 
 if (isDev) {

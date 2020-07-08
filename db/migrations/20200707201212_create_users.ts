@@ -2,7 +2,6 @@ import * as Knex from "knex";
 
 const tableName = 'users'
 
-
 export async function up(knex: Knex): Promise<any> {
   return knex.schema.createTable(tableName, table => {
     table.increments("id")
@@ -10,6 +9,8 @@ export async function up(knex: Knex): Promise<any> {
     table.string("password", 255).notNullable()
     table.string("name", 100).notNullable()
     table.dateTime("createdAt").defaultTo(knex.fn.now()).notNullable()
+
+    table.unique(["email"])
   })
 }
 
