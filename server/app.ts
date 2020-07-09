@@ -8,7 +8,7 @@ const app = express();
 const isDev = process.env.NODE_ENV != 'production'
 
 app.use(express.json())
-// app.use(express.static(path.resolve(__dirname, '../client')))
+app.use(express.static(path.resolve(__dirname, '../client')))
 
 app.use(setUser)
 app.use('/api', routes)
@@ -19,21 +19,20 @@ if (isDev) {
   console.log(`*** ${env} Mode ***`)
 
   require('dotenv').config()
-  // const fallback = require('connect-history-api-fallback')
-  // const webpack = require('webpack')
-  // const webpackDevMiddleware = require('webpack-dev-middleware')
+  const fallback = require('connect-history-api-fallback')
+  const webpack = require('webpack')
+  const webpackDevMiddleware = require('webpack-dev-middleware')
 
-  // const config = require('../webpack.config.js')
-  // const compiler = webpack(config)
+  const config = require('../webpack.config.js')
+  const compiler = webpack(config)
 
-  // app.use(fallback({ verbose: false }))
+  app.use(fallback({ verbose: false }))
 
-  // app.use(webpackDevMiddleware(compiler))
-} 
-// else {
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "../client/index.html"))
-//   })
-// }
+  app.use(webpackDevMiddleware(compiler))
+} else {
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/index.html"))
+  })
+}
 
 export default app
