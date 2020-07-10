@@ -23,7 +23,7 @@ class Login extends React.Component<RouteComponentProps, State> {
         <div className="left-side">
           <div className="card">
             <form onSubmit={this.login}>
-              <h3>Sign in</h3>
+              <h1>Sign in</h1>
               <p>or <a onClick={ this.goToCreateAccount }>create account</a></p> 
               <div className="form-group">
                 <input
@@ -56,7 +56,7 @@ class Login extends React.Component<RouteComponentProps, State> {
   }
 
   login = async (e) => {
-    
+    e.preventDefault()
     try {
       const { email, password } = this.state
       await authService.login(email, password)

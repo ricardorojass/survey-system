@@ -65,8 +65,7 @@ class Register extends React.Component<RouteComponentProps, State> {
   }
 
   register = async (e) => {
-    console.log('state', this.state);
-    
+    e.preventDefault()
     try {
       const { name, email, password } = this.state
       
