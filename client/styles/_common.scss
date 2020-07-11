@@ -1,26 +1,3 @@
-* { box-sizing: border-box; }
-
-html, body {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  color: $color_light;
-  text-decoration: none;
-}
-
-h1 {
-  font-size: 1.6rem;
-  margin-bottom: 1.8rem;
-}
-h2 { font-size: 1.4rem; }
-h3 { font-size: 1.2rem; }
-h4 { font-size: 1.1rem; }
-h5 { font-size: 1rem; }
-h6 { font-size: 0.9rem; }
 
 input {
   color: $color_font_forms;

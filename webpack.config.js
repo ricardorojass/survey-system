@@ -1,5 +1,6 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const tailwindcss = require('tailwindcss');
 const HtmlWebpackPlugin = require('html-webpack-plugin');;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -66,7 +67,7 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => [ autoprefixer ]
+              plugins: () => [ autoprefixer, tailwindcss ]
             }
           },
           'sass-loader'

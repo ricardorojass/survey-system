@@ -63,6 +63,7 @@
     "sass-loader": "^9.0.2",
     "source-map-loader": "^1.0.1",
     "style-loader": "^1.2.1",
+    "tailwindcss": "^1.4.6",
     "ts-lint": "^4.5.1",
     "ts-loader": "^8.0.0",
     "webpack": "^4.43.0",

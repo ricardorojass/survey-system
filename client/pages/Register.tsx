@@ -1,8 +1,8 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import authService from './services/auth'
-import { User } from './types' 
+import authService from '../services/auth'
+import { User } from '../types' 
 
 interface State {
   name?: string,
@@ -22,8 +22,8 @@ class Register extends React.Component<RouteComponentProps, State> {
   render() {
     return (
       <div className="auth-page">
-        <div className="left-side">
-          <div className="card">
+        <div className="flex items-center justify-center w-1/3">
+          <div className="w-4/5">
             <form onSubmit={this.register}>
               <h1>Sign up</h1>
               <p>or <a onClick={ this.goToLogin }>sign in to your account</a></p> 
@@ -53,9 +53,11 @@ class Register extends React.Component<RouteComponentProps, State> {
                 <button className="btn btn-primary btn-block" type="submit">Sign up</button>
               </div>
             </form>
+            
           </div>
 
         </div>
+        <div className="w-2/3 landing-pattern"></div>
       </div>
     )
   }

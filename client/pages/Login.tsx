@@ -1,7 +1,7 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import authService from './services/auth'
+import authService from '../services/auth'
 
 interface State {
   email?: string,
@@ -20,8 +20,8 @@ class Login extends React.Component<RouteComponentProps, State> {
   render() {
     return (
       <div className="auth-page">
-        <div className="left-side">
-          <div className="card">
+        <div className="flex items-center justify-center w-1/3">
+          <div className="w-4/5">
             <form onSubmit={this.login}>
               <h1>Sign in</h1>
               <p>or <a onClick={ this.goToCreateAccount }>create account</a></p> 
@@ -47,6 +47,7 @@ class Login extends React.Component<RouteComponentProps, State> {
           </div>
 
         </div>
+        <div className="w-2/3 landing-pattern"></div>
       </div>
     )
   }
@@ -61,7 +62,7 @@ class Login extends React.Component<RouteComponentProps, State> {
       const { email, password } = this.state
       await authService.login(email, password)
 
-      
+      this.props.history.push(`/surveys`)
     } catch (e) {
       console.log(e)
 
