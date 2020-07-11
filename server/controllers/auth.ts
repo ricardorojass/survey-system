@@ -5,11 +5,13 @@ import { User } from '../types'
 
 export async function login(req: any, res: any, next: any) {
   try {
+    let user: User
     const { email, password } = req.body
-    
-    const user: User = await usersService.findByEmail(email)
+    if (email.length & password.length) {
+      user = await usersService.findByEmail(email)
+    }
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      res.status(401).json({ reason: "invalid-credentials" })
+      res.status(401).json({ reason: "unauthorized" })
     } else {
       const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || "secretcode")
       res.json({ name: user.name, email: user.email, token })

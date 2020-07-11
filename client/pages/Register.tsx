@@ -25,8 +25,8 @@ class Register extends React.Component<RouteComponentProps, State> {
         <div className="flex items-center justify-center w-1/3">
           <div className="w-4/5">
             <form onSubmit={this.register}>
-              <h1>Sign up</h1>
-              <p>or <a onClick={ this.goToLogin }>sign in to your account</a></p> 
+              <h1 className="text-2xl">Sign up</h1>
+              <p className="text-sm pb-3">or <a className="text-blue-500 cursor-pointer" onClick={ this.goToLogin }>sign in to your account</a></p> 
               <div className="form-group">
                 <input
                   type="text"
