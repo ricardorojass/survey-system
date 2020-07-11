@@ -7,9 +7,10 @@ import {
 
 import authService from './services/auth'
 import Header from './components/Header'
-import Home from './Home'
-import Login from './Login'
-import Register from './Register'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Survey from './pages/Survey'
 import './styles/application.scss'
 
 
@@ -30,6 +31,7 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/surveys" component={Survey} />
         </Switch>
 
       </Router>

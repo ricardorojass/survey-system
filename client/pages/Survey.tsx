@@ -1,8 +1,8 @@
 import React from 'react'
 import { RouteComponentProps } from "react-router"
 
-import Header from './components/Header'
-import Loading from './components/Loading'
+import Header from '../components/Header'
+import Loading from '../components/Loading'
 
 interface State {
   loading?: boolean
@@ -30,7 +30,7 @@ export default class SurveyView extends React.Component<RouteComponentProps<Prop
   render() {
 
     return (
-      <div className="survey-page">
+      <div className="bg-gray-100">
         <Header />
       </div>
     )
