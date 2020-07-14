@@ -8,7 +8,8 @@ const find = async (id: number): Promise<User> => {
 }
 
 const findByEmail = async (email: string): Promise<User> => {
-  return await UserModel.query().where('email', email)
+  const [user] = await UserModel.query().where('email', email)
+  return user
 }
 
 const create = async (user: User): Promise<User> => {

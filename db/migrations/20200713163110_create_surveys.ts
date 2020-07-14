@@ -9,9 +9,9 @@ export async function up(knex: Knex): Promise<any> {
     table.string("title", 255).notNullable()
     table.text("description").notNullable()
     table.string("headerUrl", 255).notNullable()
-    table.jsonb("themeColor").notNullable()
-    table.jsonb("backgroundColor").notNullable()
-    table.jsonb("fontStyle").notNullable()
+    table.string("themeColor", 7).notNullable()
+    table.string("backgroundColor", 7).notNullable()
+    table.string("fontStyle", 30).notNullable()
     table.dateTime("createdAt").defaultTo(knex.fn.now()).notNullable()
     table.dateTime("updatedAt").defaultTo(knex.fn.now()).notNullable()
 

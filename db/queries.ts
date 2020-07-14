@@ -1,0 +1,1 @@
+const insertSurvey = `insert into surveys ("userId", "title", "description", "headerUrl", "themeColor", "backgroundColor", "fontStyle") values ('24', 'first survey', 'first survey description', '', '', '', '')`
