@@ -1,7 +1,7 @@
 import knex from 'knex'
 const { Model } = require('objection')
 const knexConfig = require('../../knexfile')
-const QuestionModel = require('./question')
+const AnswerModel = require('./answer')
 
 Model.knex(knex(knexConfig.development))
 
@@ -22,10 +22,18 @@ class OptionModel extends Model {
     return {
       question: {
         relation: Model.BelongsToOneRelation,
-        modelClass: QuestionModel,
+        modelClass: AnswerModel,
         join: {
           from: 'options.questionId',
           to: 'questions.id'
+        }
+      },
+      answers: {
+        relation: Model.HasManyRelation,
+        modelClass: AnswerModel,
+        join: {
+          from: 'options.id',
+          to: 'answers.optionId'
         }
       }
     }
