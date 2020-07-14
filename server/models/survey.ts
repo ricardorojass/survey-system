@@ -2,6 +2,7 @@ import knex from 'knex'
 const { Model } = require('objection')
 const knexConfig = require('../../knexfile')
 const UserModel = require('./user')
+const ResponseModel = require('./response')
 
 Model.knex(knex(knexConfig.development))
 
@@ -31,6 +32,14 @@ class SurveyModel extends Model {
         join: {
           from: 'surveys.userId',
           to: 'users.id'
+        }
+      },
+      responses: {
+        relation: Model.HasManyRelation,
+        modelClass: ResponseModel,
+        join: {
+          from: 'surveys.id',
+          to: 'responses.surveyId'
         }
       }
     }
