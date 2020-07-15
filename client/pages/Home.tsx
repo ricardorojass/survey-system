@@ -13,8 +13,7 @@ export default () => {
   }
 
   if (authService.isAuthenticated()) {
-    return <Redirect to='/survey' />
-    // return <Redirect to={`/curriculum/${sections[0].id}/${sections[0].lessons[0].id}`} />
+    return <Redirect to='/surveys' />
   } else {
     return <Redirect to='/register' />
   }

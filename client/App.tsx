@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,13 +10,20 @@ import Header from './components/Header'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Survey from './pages/Survey'
+import SurveyListView from './pages/SurveyListView'
 import './styles/application.scss'
+import { User } from "./types"
 
 
 
 const App = () => {
+  const [ authenticated, setAuthenticated ] = useState(false)
+
   useEffect(() => {
+    authService.subscribe((_: User) => {
+      setAuthenticated( authService.isAuthenticated() )
+    })
+
     async function load() {
       await authService.loadUser()
     }
@@ -26,12 +33,12 @@ const App = () => {
   return (
     <React.Fragment>
       <Router>
-
+        { authenticated ? <Header /> : null }
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/surveys" component={Survey} />
+          <Route exact path="/surveys" component={SurveyListView} />
         </Switch>
 
       </Router>

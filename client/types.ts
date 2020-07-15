@@ -12,8 +12,19 @@ export interface User {
   password?: string
   createdAt?: Date
   token?: string
-  admin?: boolean
   loaded?: boolean
-  invitationToken?: string
-  progress?: number
+}
+
+export interface Survey {
+  id?: number
+  userId?: number
+  title: string
+  description?: string
+  headerUrl?: string
+  themeColor?: string
+  backgroundColor?: string
+  fontStyle?: string
+  createdAt?: Date
+  updatedAt?: Date
+  loaded?: boolean
 }

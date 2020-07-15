@@ -3,7 +3,11 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import authService from '../services/auth'
 import { User } from '../types'
 
-class Header extends React.Component<RouteComponentProps> {
+interface State {
+  isAuthenticated: boolean
+}
+
+class Header extends React.Component<RouteComponentProps, State> {
 
   constructor(props: RouteComponentProps) {
     super(props)
@@ -25,7 +29,7 @@ class Header extends React.Component<RouteComponentProps> {
               Button
             </button> */}
             <span className="pl-4">
-              { authService.isAuthenticated() ? <a onClick={this.logout} href="#">Logout</a> : <a onClick={this.login} href="#">Sign in</a> }
+              { this.state.isAuthenticated ? <a onClick={this.logout} href="#">Logout</a> : <a onClick={this.login} href="#">Sign in</a> }
             </span>
           </div>
 
