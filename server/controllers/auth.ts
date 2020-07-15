@@ -7,9 +7,10 @@ export async function login(req: any, res: any, next: any) {
   try {
     let user: User
     const { email, password } = req.body
-    if (email.length & password.length) {
+    if (email.length > 0 && password.length > 0) {
       user = await usersService.findByEmail(email)
     }
+
     if (!user || !(await bcrypt.compare(password, user.password))) {
       res.status(401).json({ reason: "unauthorized" })
     } else {
