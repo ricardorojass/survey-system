@@ -1,10 +1,13 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import authService from '../services/auth'
+import surveyUIService from '../services/surveyUIService'
 import { User } from '../types'
 
+import SurveyModal from '../components/SurveyModal'
+
 interface State {
-  isAuthenticated: boolean
+  isAuthenticated?: boolean
 }
 
 class Header extends React.Component<RouteComponentProps, State> {
@@ -22,8 +25,10 @@ class Header extends React.Component<RouteComponentProps, State> {
     return (
       <header className="bg-indigo-100">
         <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
-          <img className="fill-current w-12" src="/icons/add-solid.svg"/>
-          {/* Porque no se usa this.state */}
+          <button onClick={this.toggleModal}>
+            <img className="fill-current w-12" src="/icons/add-solid.svg"/>
+          </button>
+          <SurveyModal />
           <div>
             {/* <button className="bg-tomato-default hover:bg-tomato-lighter text-white font-bold py-2 px-4 border border-blue-700 rounded">
               Button
@@ -52,6 +57,10 @@ class Header extends React.Component<RouteComponentProps, State> {
 
     authService.logout()
     this.props.history.push('/login')
+  }
+
+  toggleModal = () => {
+    surveyUIService.openModal()
   }
 }
 

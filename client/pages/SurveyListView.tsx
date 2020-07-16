@@ -11,19 +11,15 @@ interface State {
   loading?: boolean
   error?: Error
   surveys?: Survey[]
+  showModal: boolean
 }
 
-interface Props {
-  survey?: string
-}
+export default class SurveyListView extends React.Component<RouteComponentProps, State> {
 
-export default class SurveyListView extends React.Component<RouteComponentProps<Props>, State> {
-  surveyId: string
-
-  constructor(props: RouteComponentProps<Props>) {
+  constructor(props: RouteComponentProps) {
     super(props)
 
-    this.state = { loading: true, error: null, surveys: [] }
+    this.state = { loading: true, error: null, surveys: [], showModal: false }
   }
 
   async componentDidMount() {
