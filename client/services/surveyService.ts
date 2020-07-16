@@ -1,11 +1,8 @@
 import axios from '../axios'
 import { Survey } from '../types'
 
-const getSurveysUrl = ''
-
 async function list(): Promise<Survey[]> {
   const response = await axios.get('/surveys')
-  console.log(response)
   return response.data
 }
 
