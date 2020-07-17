@@ -24,7 +24,9 @@ class Login extends React.Component<RouteComponentProps, State> {
           <div className="w-4/5">
             <form onSubmit={this.login}>
               <h1 className="text-2xl">Sign in</h1>
-              <p className="text-sm pb-3">or <a className="text-blue-500 cursor-pointer" onClick={ this.goToCreateAccount }>create account</a></p> 
+              <p className="text-sm pb-3">
+                or <a className="text-blue-500 cursor-pointer" onClick={ this.goToCreateAccount }>create account</a>
+              </p> 
               <div className="form-group">
                 <input
                   type="email"

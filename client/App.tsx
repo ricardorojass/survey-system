@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import SurveyListView from './pages/SurveyListView'
+import SurveyDetailView from './pages/SurveyDetail'
 import './styles/application.scss'
 import { User } from "./types"
 
@@ -39,6 +40,7 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/surveys" component={SurveyListView} />
+          <Route exact path="/survey/:id" component={SurveyDetailView} />
         </Switch>
 
       </Router>

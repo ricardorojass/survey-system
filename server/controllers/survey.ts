@@ -1,4 +1,16 @@
 import surveysService from '../services/surveys'
+import { Survey } from 'server/types'
+import { Request, Response } from 'express'
+
+export async function getSurvey(req: Request, res: Response, next: any) {
+  try {
+    const { id } = req.params
+    const surveys = await surveysService.findSurveyById(id)
+    res.json(surveys)
+  } catch (error) {
+    
+  }
+}
 
 export async function getSurveys(req: any, res: any, next: any) {
   try {
@@ -7,5 +19,23 @@ export async function getSurveys(req: any, res: any, next: any) {
     res.json(surveys)
   } catch (error) {
     
+  }
+}
+
+export async function createSurvey(req: Request, res: Response, next: any) {
+  try {
+    const user = res.locals.user
+    let data: Survey = req.body
+    data.userId = user.id
+
+    const surveyResponse = await surveysService.create(data)
+    
+    res.json(surveyResponse)
+  } catch (e) {
+    if (e) {
+      res.status(422).json(e)
+    } else {
+      next(e)
+    }
   }
 }

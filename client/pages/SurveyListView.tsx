@@ -4,7 +4,7 @@ import { RouteComponentProps } from "react-router"
 import SurveySummary from '../components/SurveySummary'
 import Loading from '../components/Loading'
 
-import surveyService from '../services/surveyService'
+import surveysService from '../services/surveysService'
 import { Survey } from '../types'
 
 interface State {
@@ -29,7 +29,7 @@ export default class SurveyListView extends React.Component<RouteComponentProps,
   render() {
 
     return (
-      <div className="bg-gray-100 h-screen">
+      <div className="bg-gray-100 h-auto">
 
         <section className="flex-grow flex justify-center items-center">
           <div className="mx-auto px-4 sm:px-8 py-2 mt-6">
@@ -50,7 +50,7 @@ export default class SurveyListView extends React.Component<RouteComponentProps,
 
   fetchSurveys = async () => {
     try {
-      const surveys: Survey[] = await surveyService.list()
+      const surveys: Survey[] = await surveysService.list()
       this.setState({ loading: false, surveys })
     } catch (e) {
       this.setState({ loading: false, error: e })
