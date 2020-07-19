@@ -59,10 +59,6 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
                     question={questions[0]}
                     options={options}
                     onChange={this.handleChange} />
-                  <QuestionComponent
-                    question={questions[0]}
-                    options={options}
-                    onChange={this.handleChange} />
                   {/* The following code doesn't works ------------------- */}
                   {/* { survey.questions.map(question => {
                     <Question
@@ -87,7 +83,6 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
     const targetName = e.target.name
     const targetValue = e.target.value
     let obj = {}
-    console.log('obj', obj);
     
     switch (targetID) {
       case 'survey':
@@ -97,12 +92,18 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
         obj[targetID] = [ { [targetName]: targetValue } ]
         break;
       case 'options':
-        const optionSelected: Option = this.state.options.find(option => option.description === targetName)
         const isChecked = e.target.checked
-        console.log('#####', this.state.options);
-        
-        obj[targetID] = [ { ...this.state.options } ]
-        break;
+        let optionSelected: Option = this.state.options.find(option => option.description === targetName)
+        optionSelected.checked = isChecked
+        let cloneOptions = this.state.options.map(option => { return {...option} })
+        cloneOptions.forEach(option => {
+          if (option.description === optionSelected.description) {
+            option.checked = isChecked
+          }
+        })
+        // Todo: it should be picked only 1 option
+        this.setState({options: cloneOptions})
+        return;
         
       default:
         obj[targetID] = { [targetName]: targetValue }
