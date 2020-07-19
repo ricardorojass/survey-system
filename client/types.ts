@@ -28,3 +28,22 @@ export interface Survey {
   updatedAt?: Date
   loaded?: boolean
 }
+
+export interface Question {
+  id?: number
+  surveyId?: number
+  title: string
+  description?: string
+  required?: boolean
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+export interface Option {
+  id?: number
+  questionId?: number
+  description?: string
+  checked?: boolean
+  createdAt?: Date
+  updatedAt?: Date
+}

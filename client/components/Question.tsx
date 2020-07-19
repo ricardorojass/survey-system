@@ -1,31 +1,41 @@
 import React from 'react'
-import { Survey } from '../types'
+import { Question, Option } from '../types'
 
 
 interface Props {
-  title?: string
-  options?: string[]
+  question?: Question
+  options?: Option[]
+  onChange: any
 }
 
-export default ({ title, options }: Props) => {
-  
+const Question = ({ question, options, onChange }: Props) => {
 
   return (
-    <section className="bg-white shadow-lg">
+    <section className="bg-white shadow-lg mt-10">
       <div className="px-6 pt-4">
         {/*body*/}
         <div className="form-group">
           <textarea
-            rows={1}
             className="text-3xl border-t-0 border-l-0 border-r-0 border-b-1"
-            id="title"
-            value={title}>
+            id="questions"
+            name="title"
+            value={question.title}
+            onChange={onChange}>
           </textarea>
         </div>
-        <div className="form-group">
-          <input className="mr-2 leading-tight" type="checkbox"/>
-          <span className="text-sm">{options[0]}</span>
-        </div>
+        {/* todo: create option component */}
+        { options.map(option => 
+          <div key={option.id} className="form-group">
+            <input
+              className="mr-2 leading-tight"
+              id="options"
+              name={option.description}
+              type="checkbox"
+              checked={option.checked}
+              onChange={onChange}/>
+            <span className="text-sm">{option.description}</span>
+          </div>
+        )}
         {/*body*/}
         {/*footer*/}
         <div className="flex items-center justify-end p-4 border-t border-solid border-gray-300">
@@ -51,3 +61,5 @@ export default ({ title, options }: Props) => {
   )
 
 }
+
+export default Question
