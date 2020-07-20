@@ -4,14 +4,18 @@ const SurveyModel = require('../models/survey')
 const UserModel = require('../models/user')
 
 const findSurveyById = async (surveyId: string): Promise<Survey> => {
-  return await SurveyModel.query().findById(surveyId)
+  return await SurveyModel.query()
+    .where('id', surveyId )
+    .withGraphFetched('questions.options')
 }
 
 const findAllByUser = async (userId: number): Promise<Array<Survey>> => {
-  return await db("surveys").where({ userId })
+  return await db("surveys")
+    .where({ userId })
 }
 
 const create = async (survey: Survey): Promise<Survey>  => {
+  // Todo: Use Objection
   const [response] = await db("surveys").insert(survey).returning('*')
   return response
 }

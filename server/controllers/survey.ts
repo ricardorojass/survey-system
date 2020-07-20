@@ -5,8 +5,8 @@ import { Request, Response } from 'express'
 export async function getSurvey(req: Request, res: Response, next: any) {
   try {
     const { id } = req.params
-    const surveys = await surveysService.findSurveyById(id)
-    res.json(surveys)
+    const survey: Survey = await surveysService.findSurveyById(id)
+    res.json(survey)
   } catch (error) {
     
   }

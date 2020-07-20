@@ -12,13 +12,34 @@ export interface Token {
 
 export interface Survey {
   id?: number
-  userId: number
-  title: string
+  userId?: number
+  title?: string
   description?: string
   headerUrl?: string
   themeColor?: string
   backgroundColor?: string
   fontStyle?: string
+  questions?: Question[]
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+export interface Question {
+  id?: number
+  surveyId?: number
+  title?: string
+  description?: string
+  required?: boolean
+  options?: Option[]
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+export interface Option {
+  id?: number
+  questionId?: number
+  description?: string
+  checked?: boolean
   createdAt?: Date
   updatedAt?: Date
 }
