@@ -4,28 +4,17 @@ interface Props {
   index?: number
   title?: string
   description?: string,
-  onChange: any
+  onFieldChange: any
 }
 
 class SurveyTitle extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props)
-
-  }
-
-  handleChange = (e: any) => {
-    const targetName = e.target.name
-    // 1. Take a copy of the current title
-    const updatedTitle = {
-      ...this.props.title as {},
-      [targetName]: e.target.value
-    }
-    this.props.onChange(targetName, updatedTitle)
   }
   
   render() {
-    const { title, description, onChange } = this.props
+    const { title, description, onFieldChange } = this.props
     return (
       <section className="bg-white shadow-lg">
         <div className="px-6 py-4">
@@ -36,7 +25,7 @@ class SurveyTitle extends React.Component<Props> {
               id="survey"
               name="survey.title"
               value={title}
-              onChange={this.handleChange}>
+              onChange={e => onFieldChange("title", e.target.value)}>
             </textarea>
           </div>
           <div className="form-group">
@@ -46,7 +35,7 @@ class SurveyTitle extends React.Component<Props> {
               id="survey"
               name="survey.description"
               value={description}
-              onChange={this.handleChange}>
+              onChange={e => onFieldChange("description", e.target.value)}>
             </textarea>
           </div>
         </div>

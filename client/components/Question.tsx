@@ -1,21 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Question } from '../types'
 
 interface Props {
   question?: Question
-  onChange: any
+  onQuestionChange: any
 }
 
-const QuestionComponent = ({ question, onChange }: Props) => {
-  console.log('question component', question);
+const QuestionComponent = ({ question, onQuestionChange }: Props) => {
+  const [selectedOption, setSelectedOption] = useState(null)
 
-  const handleChange = (e: any) => {
-    const targetName = e.target.name
-    const updatedQuestion = {
-      ...question,
-      [targetName]: e.target.value
-    }
-    onChange(targetName, updatedQuestion)
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value)
+    console.log(selectedOption);
   }
 
   return (
@@ -28,20 +24,23 @@ const QuestionComponent = ({ question, onChange }: Props) => {
             className="text-3xl border-t-0 border-l-0 border-r-0 border-b-1"
             name="title"
             value={question.title}
-            onChange={handleChange}>
+            onChange={e => onQuestionChange(question, e.target.value)}>
           </textarea>
         </div>
         {/* todo: create option component */}
         { question.options.map(option => 
           <div key={option.description} className="form-group">
-            <input
-              className="mr-2 leading-tight"
-              id="options"
-              name="options"
-              type="checkbox"
-              checked={false}
-              onChange={handleChange}/>
-            <span className="text-sm">{option.description}</span>
+            <label>
+              <input
+                className="mr-2 leading-tight"
+                type="radio"
+                name="question-option"
+                value={option.description}
+                checked={selectedOption === option.description}
+                onChange={handleOptionChange}
+              />
+              <span className="text-sm">{option.description}</span>
+            </label>
           </div>
         )}
         {/*body*/}

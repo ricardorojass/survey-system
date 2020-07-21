@@ -10,7 +10,6 @@ interface State {
   loading?: boolean
   error?: any
   survey?: Survey
-  questions?: Question[]
 }
 
 interface Props {
@@ -26,14 +25,7 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
     this.state = { 
       loading: true,
       error: null,
-      survey: {},
-      questions: [{
-        title: '',
-        description: '',
-        options: [
-          { description: '' }
-        ]
-      }]
+      survey: { questions: [] },
     } 
     this.surveyId = props.match.params.id
   }
@@ -43,41 +35,26 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   }
 
   render() {
-    const { loading, error, survey, questions } = this.state
+    const { loading, error, survey } = this.state
     return (
       <div className="bg-gray-100 h-auto">
         <div className="flex">
           <div className="mx-auto p-4 mt-6 w-6/12">
             <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
               <p className="text-2xl pl-6">Edit survey</p>
-              <form onSubmit={this.patchSurvey}>
+              <form>
                 <SurveyTitle
                   index={survey.id}
                   title={survey.title}
                   description={survey.description}
-                  onChange={this.handleChange} />
+                  onFieldChange={this.updateSurveyField} />
 
-                <QuestionComponent
-                  key={questions[0].title}
-                  question={questions[0]}
-                  onChange={this.handleChange} />
-                {/* The following code doesn't works ------------------- */}
-                {/* { survey.questions.map(question => {
-                  <QuestionComponent
-                    key={question.title}
-                    question={question}
-                    onChange={this.handleChange} />
-                }) } */}
-                {/*footer*/}
-                <div className="flex items-center justify-end mt-6">
-                  <button
-                    className="bg-green-500 text-white w-full active:bg-green-600 font-bold uppercase text-sm px-6 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    type="submit"
-                    style={{ transition: "all .15s ease" }}
-                  >
-                    Update
-                  </button>
-                </div>
+                { survey.questions.map(question => (
+                    <QuestionComponent
+                      key={question.title}
+                      question={question}
+                      onQuestionChange={this.updateQuestion} />
+                  )) }
               </form>
 
             </div>
@@ -87,41 +64,18 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
     )
   }
 
-  handleChange = (key: string, updatedSurvey: any) => {
-    const  [entity, property] = key.split('.')
-    const isSurvey = entity === 'survey'
-    if (isSurvey){
-      this.updateSurveyState(property, updatedSurvey)
-    } else {
-      this.updateQuestionState(key, updatedSurvey)
-    }
-  }
-
-  updateSurveyState = (property: string, updatedQuestion: any) => {
-    // 1. Take a copy of the current state
-    const survey = { ...this.state.survey }
-    // 2. Update the state
-    survey[property] = updatedQuestion.property
-    // 3. Set that to state
-    this.setState({ survey })
-  }
-
-  updateQuestionState = (property: string, updatedSurvey: any) => {
-    console.log('updatedquestion...', property, updatedSurvey);
-    
-    // 1. Take a copy of the current state
-    const questions = [ ...this.state.questions ]
-    // 2. Update the state
-    
-    let currentQuestion = questions.find(question => question.id === updatedSurvey.id)
-    let cloneQuestions = this.state.questions.map(question => { return {...question} })
-    cloneQuestions.map(q => {
-      if (q.id === currentQuestion.id) {
-        q.title = updatedSurvey.title
-      }
+  updateSurveyField = (field, value) => {
+    this.setState(state => {
+      const newState = { survey: { ...state.survey }}
+      newState.survey[field] = value
+      return newState
     })
-    // 3. Set that to state
-    this.setState({ questions:  cloneQuestions})
+
+    // llamar el servidor
+  }
+
+  updateQuestion = (question: Question, title: string) => {
+    console.log('Updated question', question.id, title);
   }
 
   fetchSurvey = async () => {
@@ -130,18 +84,12 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
       
       this.setState({
         loading: false,
-        survey: survey,
-        questions: survey.questions
+        survey: survey
       })
       console.log('state: ', this.state.survey);
     } catch (e) {
       console.log(e);
       this.setState({ loading: false, error: e })
     }
-  }
-
-  patchSurvey = (e) => {
-    e.preventDefault()
-    console.log('survey updated');
   }
 }
