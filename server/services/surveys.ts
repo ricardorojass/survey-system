@@ -4,9 +4,10 @@ const SurveyModel = require('../models/survey')
 const UserModel = require('../models/user')
 
 const findSurveyById = async (surveyId: string): Promise<Survey> => {
-  return await SurveyModel.query()
+  const [survey] = await SurveyModel.query()
     .where('id', surveyId )
     .withGraphFetched('questions.options')
+  return survey
 }
 
 const findAllByUser = async (userId: number): Promise<Array<Survey>> => {

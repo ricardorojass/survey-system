@@ -1,14 +1,22 @@
 import React from 'react'
-import { Question, Option } from '../types'
-
+import { Question } from '../types'
 
 interface Props {
   question?: Question
-  options?: Option[]
   onChange: any
 }
 
-const Question = ({ question, options, onChange }: Props) => {
+const QuestionComponent = ({ question, onChange }: Props) => {
+  console.log('question component', question);
+
+  const handleChange = (e: any) => {
+    const targetName = e.target.name
+    const updatedQuestion = {
+      ...question,
+      [targetName]: e.target.value
+    }
+    onChange(targetName, updatedQuestion)
+  }
 
   return (
     <section className="bg-white shadow-lg mt-10">
@@ -16,23 +24,23 @@ const Question = ({ question, options, onChange }: Props) => {
         {/*body*/}
         <div className="form-group">
           <textarea
+            rows={1}
             className="text-3xl border-t-0 border-l-0 border-r-0 border-b-1"
-            id="questions"
             name="title"
             value={question.title}
-            onChange={onChange}>
+            onChange={handleChange}>
           </textarea>
         </div>
         {/* todo: create option component */}
-        { options.map(option => 
-          <div key={option.id} className="form-group">
+        { question.options.map(option => 
+          <div key={option.description} className="form-group">
             <input
               className="mr-2 leading-tight"
               id="options"
-              name={option.description}
+              name="options"
               type="checkbox"
-              checked={option.checked}
-              onChange={onChange}/>
+              checked={false}
+              onChange={handleChange}/>
             <span className="text-sm">{option.description}</span>
           </div>
         )}
@@ -62,4 +70,4 @@ const Question = ({ question, options, onChange }: Props) => {
 
 }
 
-export default Question
+export default QuestionComponent

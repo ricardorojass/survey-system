@@ -18,7 +18,8 @@ export interface User {
 export interface Survey {
   id?: number
   userId?: number
-  title: string
+  questions?: Question[]
+  title?: string
   description?: string
   headerUrl?: string
   themeColor?: string
@@ -32,7 +33,8 @@ export interface Survey {
 export interface Question {
   id?: number
   surveyId?: number
-  title: string
+  options?: Option[]
+  title?: string
   description?: string
   required?: boolean
   createdAt?: Date
