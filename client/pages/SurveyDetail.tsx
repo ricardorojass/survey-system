@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Survey } from '../types';
-import surveysService from '../services/surveysService';
+import { Survey, Question, Option } from '../types';
 
+import surveysService from '../services/surveysService';
 import SurveyTitle from '../components/SurveyTitle'
-import SurveyOption from '../components/SurveyOption';
+import QuestionComponent from '../components/Question';
 
 interface State {
   loading?: boolean
-  error?: Error
+  error?: any
   survey?: Survey
 }
 
@@ -21,48 +21,72 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
 
   constructor(props: RouteComponentProps<Props>) {
     super(props)
-    console.log(props.match.params);
     
-    this.state = { loading: true, error: null, survey: null }
+    this.state = { 
+      loading: true,
+      error: null,
+      survey: { questions: [] },
+    } 
     this.surveyId = props.match.params.id
   }
 
   async componentDidMount() {
-    console.log('survey id', this.surveyId);
-    
     await this.fetchSurvey()
   }
 
   render() {
     const { loading, error, survey } = this.state
-    if (survey) {
-      return (
-        <div className="bg-gray-100 h-auto">
-          <div className="flex">
-            <div className="mx-auto p-4 mt-6 w-6/12">
-              <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
-                <p className="text-2xl pl-6">Edit survey</p>
-                <SurveyTitle title={survey.title} description={survey.description} />
+    return (
+      <div className="bg-gray-100 h-auto">
+        <div className="flex">
+          <div className="mx-auto p-4 mt-6 w-6/12">
+            <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
+              <p className="text-2xl pl-6">Edit survey</p>
+              <form>
+                <SurveyTitle
+                  index={survey.id}
+                  title={survey.title}
+                  description={survey.description}
+                  onFieldChange={this.updateSurveyField} />
 
-                <SurveyOption title={'question 1'} options={['Option 1']}/>
+                { survey.questions.map(question => (
+                    <QuestionComponent
+                      key={question.title}
+                      question={question}
+                      onQuestionChange={this.updateQuestion} />
+                  )) }
+              </form>
 
-              </div>
             </div>
           </div>
         </div>
-      )
-    } else {
-      return (null)
-    }
+      </div>
+    )
+  }
+
+  updateSurveyField = (field, value) => {
+    this.setState(state => {
+      const newState = { survey: { ...state.survey }}
+      newState.survey[field] = value
+      return newState
+    })
+
+    // llamar el servidor
+  }
+
+  updateQuestion = (question: Question, title: string) => {
+    console.log('Updated question', question.id, title);
   }
 
   fetchSurvey = async () => {
     try {
-      const survey: Survey = await surveysService.fetchSurvey(this.surveyId)
-      console.log('hola', survey);
+      let survey: Survey = await surveysService.fetchSurvey(this.surveyId)
       
-      this.setState({ loading: false, survey })
-      
+      this.setState({
+        loading: false,
+        survey: survey
+      })
+      console.log('state: ', this.state.survey);
     } catch (e) {
       console.log(e);
       this.setState({ loading: false, error: e })

@@ -18,7 +18,8 @@ export interface User {
 export interface Survey {
   id?: number
   userId?: number
-  title: string
+  questions?: Question[]
+  title?: string
   description?: string
   headerUrl?: string
   themeColor?: string
@@ -27,4 +28,24 @@ export interface Survey {
   createdAt?: Date
   updatedAt?: Date
   loaded?: boolean
+}
+
+export interface Question {
+  id?: number
+  surveyId?: number
+  options?: Option[]
+  title?: string
+  description?: string
+  required?: boolean
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+export interface Option {
+  id?: number
+  questionId?: number
+  description?: string
+  checked?: boolean
+  createdAt?: Date
+  updatedAt?: Date
 }
