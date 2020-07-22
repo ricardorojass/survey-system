@@ -5,6 +5,7 @@ import { Survey, Question, Option } from '../types';
 import surveysService from '../services/surveysService';
 import SurveyTitle from '../components/SurveyTitle'
 import QuestionComponent from '../components/Question';
+import questionsService from '../services/questionsService';
 
 interface State {
   loading?: boolean
@@ -52,8 +53,7 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
                 { survey.questions.map(question => (
                     <QuestionComponent
                       key={question.title}
-                      question={question}
-                      onQuestionChange={this.updateQuestion} />
+                      question={question} />
                   )) }
               </form>
 
@@ -65,17 +65,13 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   }
 
   updateSurveyField = (field, value) => {
-    this.setState(state => {
-      const newState = { survey: { ...state.survey }}
+    this.setState(prevState => {
+      const newState = { survey: { ...prevState.survey }}
+      console.log('newState', newState);
       newState.survey[field] = value
       return newState
-    })
-
+    }, async () => await surveysService.update(this.state.survey) )
     // llamar el servidor
-  }
-
-  updateQuestion = (question: Question, title: string) => {
-    console.log('Updated question', question.id, title);
   }
 
   fetchSurvey = async () => {

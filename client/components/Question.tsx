@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
 import { Question } from '../types'
+import questionsService from '../services/questionsService'
 
 interface Props {
   question?: Question
-  onQuestionChange: any
 }
 
-const QuestionComponent = ({ question, onQuestionChange }: Props) => {
+const QuestionComponent = ({ question }: Props) => {
   const [selectedOption, setSelectedOption] = useState(null)
-
+  const [currentQuestion, setQuestion] = useState(question)
+  console.log('QuestionComponent', currentQuestion);
+  
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value)
-    console.log(selectedOption);
+  }
+
+  const handleFieldChange = async (e) => {
+    setQuestion({ ...currentQuestion, title: e.target.value })
+    await questionsService.update(currentQuestion)
   }
 
   return (
@@ -23,12 +29,12 @@ const QuestionComponent = ({ question, onQuestionChange }: Props) => {
             rows={1}
             className="text-3xl border-t-0 border-l-0 border-r-0 border-b-1"
             name="title"
-            value={question.title}
-            onChange={e => onQuestionChange(question, e.target.value)}>
+            value={currentQuestion.title}
+            onChange={handleFieldChange}>
           </textarea>
         </div>
         {/* todo: create option component */}
-        { question.options.map(option => 
+        { currentQuestion.options.map(option =>
           <div key={option.description} className="form-group">
             <label>
               <input

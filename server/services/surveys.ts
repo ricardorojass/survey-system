@@ -21,8 +21,13 @@ const create = async (survey: Survey): Promise<Survey>  => {
   return response
 }
 
+const update = async (surveyId: string, survey: Survey): Promise<any>  => {
+  await SurveyModel.query().updateAndFetchById(surveyId, survey)
+}
+
 export default {
   findSurveyById,
   findAllByUser,
-  create
+  create,
+  update
 }
