@@ -1,6 +1,7 @@
 import surveysService from '../services/surveys'
 import { Survey } from 'server/types'
 import { Request, Response } from 'express'
+import surveys from '../services/surveys'
 
 export async function getSurvey(req: Request, res: Response, next: any) {
   try {
@@ -27,7 +28,7 @@ export async function createSurvey(req: Request, res: Response, next: any) {
     const user = res.locals.user
     let data: Survey = req.body
     data.userId = user.id
-
+    
     const surveyResponse = await surveysService.create(data)
     
     res.json(surveyResponse)
@@ -37,5 +38,21 @@ export async function createSurvey(req: Request, res: Response, next: any) {
     } else {
       next(e)
     }
+  }
+}
+
+export async function updateSurvey(req: Request, res: Response, next: any) {
+  try {
+    const surveyId = req.params.id
+    const data: Survey = req.body
+
+    const survey = surveysService.update(surveyId, data)
+    if (!survey) {
+      res.status(400).send('Upss... something went wrong')
+    } else {
+      res.status(201).send('Survey updated!')
+    }
+  } catch (error) {
+    
   }
 }

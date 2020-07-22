@@ -65,12 +65,11 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   }
 
   updateSurveyField = (field, value) => {
-    this.setState(state => {
-      const newState = { survey: { ...state.survey }}
+    this.setState(prevState => {
+      const newState = { survey: { ...prevState.survey }}
       newState.survey[field] = value
       return newState
-    })
-
+    }, async () => await surveysService.update(this.state.survey) )
     // llamar el servidor
   }
 
