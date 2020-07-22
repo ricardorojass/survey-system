@@ -46,13 +46,13 @@ export async function updateSurvey(req: Request, res: Response, next: any) {
     const surveyId = req.params.id
     const data: Survey = req.body
 
-    const survey = surveysService.update(surveyId, data)
-    if (!survey) {
-      res.status(400).send('Upss... something went wrong')
+    await surveysService.update(surveyId, data)
+    res.status(201).send('Survey updated!')
+  } catch (e) {
+    if (e) {
+      res.status(422).json(e)
     } else {
-      res.status(201).send('Survey updated!')
+      next(e)
     }
-  } catch (error) {
-    
   }
 }
