@@ -1,12 +1,11 @@
 import db from '../db'
 import { Survey } from '../types'
 const SurveyModel = require('../models/survey')
-const UserModel = require('../models/user')
 
 const findSurveyById = async (surveyId: string): Promise<Survey> => {
   const [survey] = await SurveyModel.query()
-    .where('id', surveyId )
-    .withGraphFetched('questions.options')
+    .where('surveys.id', surveyId )
+    .withGraphJoined('questions.options')
   return survey
 }
 

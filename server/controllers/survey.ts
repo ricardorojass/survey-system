@@ -6,6 +6,7 @@ import surveys from '../services/surveys'
 export async function getSurvey(req: Request, res: Response, next: any) {
   try {
     const { id } = req.params
+
     const survey: Survey = await surveysService.findSurveyById(id)
     res.json(survey)
   } catch (error) {
