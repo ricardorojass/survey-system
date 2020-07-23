@@ -1,25 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Question } from '../types'
 import questionsService from '../services/questionsService'
 
 interface Props {
-  question?: Question
+  question?: Question,
+  onUpdateQuestion: any,
+  onDeleteQuestion: any,
 }
 
-const QuestionComponent = ({ question }: Props) => {
-  const [selectedOption, setSelectedOption] = useState(null)
-  const [currentQuestion, setQuestion] = useState(question)
-  console.log('QuestionComponent', currentQuestion);
+const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion }: Props) => {
+  console.log('q comp', question);
   
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value)
-  }
-
-  const handleFieldChange = async (e) => {
-    setQuestion({ ...currentQuestion, title: e.target.value })
-    await questionsService.update(currentQuestion)
-  }
-
   return (
     <section className="bg-white shadow-lg mt-10">
       <div className="px-6 pt-4">
@@ -29,12 +20,12 @@ const QuestionComponent = ({ question }: Props) => {
             rows={1}
             className="text-3xl border-t-0 border-l-0 border-r-0 border-b-1"
             name="title"
-            value={currentQuestion.title}
-            onChange={handleFieldChange}>
+            value={question.title}
+            onChange={e => onUpdateQuestion(question.id, e.target.name, e.target.value) }>
           </textarea>
         </div>
         {/* todo: create option component */}
-        { currentQuestion.options.map(option =>
+        { question.options.map(option =>
           <div key={option.description} className="form-group">
             <label>
               <input
@@ -42,8 +33,6 @@ const QuestionComponent = ({ question }: Props) => {
                 type="radio"
                 name="question-option"
                 value={option.description}
-                checked={selectedOption === option.description}
-                onChange={handleOptionChange}
               />
               <span className="text-sm">{option.description}</span>
             </label>
@@ -63,6 +52,7 @@ const QuestionComponent = ({ question }: Props) => {
           <button
             className="text-red-500 font-bold uppercase text-sm px-6 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
             type="button"
+            onClick={e => onDeleteQuestion(question.id)}
             style={{ transition: "all .15s ease" }}
           >
             Delete

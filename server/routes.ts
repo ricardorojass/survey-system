@@ -21,6 +21,7 @@ router.put('/surveys/:id', requireUser, survey.updateSurvey)
 // Questions
 router.post('/surveys/:id/questions', requireUser, question.createQuestion)
 router.put('/surveys/:id/questions/:id', requireUser, question.updateQuestion)
+router.delete('/surveys/questions/:id', requireUser, question.deleteQuestion)
 
 
 export default router

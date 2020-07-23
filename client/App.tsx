@@ -29,6 +29,10 @@ const App = () => {
       await authService.loadUser()
     }
     load()
+
+    return () => {
+      authService.unsubscribe(load)
+    }
   }, [])
 
   return (

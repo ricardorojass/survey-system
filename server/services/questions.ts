@@ -15,20 +15,29 @@ const QuestionModel = require('../models/question')
 // }
 
 const create = async (question: Question): Promise<any>  => {
-  // Todo: Use Objection
-  console.log('server::questionService.create');
-  
-  // const [response] = await db("surveys").insert().returning('*')
-  // return response
+  const data: Question = {
+    surveyId: question.surveyId,
+    title: question.title, 
+    options: question.options
+  }
+  const [response] = await QuestionModel.insert(data).returning('*')
+
+  console.log('response',response);
+    
+  return response
 }
 
 const update = async (surveyId: string, questionId: string, question: Question): Promise<any>  => {
-  console.log('server::questionService.update', surveyId, questionId, question);
+  const response = await QuestionModel.query().updateAndFetchById(questionId, question)
+  return response
+}
 
-  // await QuestionModel.query().updateAndFetchById(surveyId, question)
+const deleteById = async (questionId: number): Promise<any>  => {
+  await QuestionModel.query().deleteById(questionId)
 }
 
 export default {
   create,
-  update
+  update,
+  deleteById,
 }
