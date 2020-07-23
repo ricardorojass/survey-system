@@ -35,6 +35,7 @@ export async function createSurvey(req: Request, res: Response, next: any) {
   } catch (e) {
     if (e) {
       res.status(422).json(e)
+      throw new Error('Cannot find survey')
     } else {
       next(e)
     }

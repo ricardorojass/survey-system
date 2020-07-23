@@ -60,7 +60,7 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
 
                 { survey.questions.map(question => (
                     <QuestionComponent
-                      key={question.title}
+                      key={question.id}
                       question={question}
                       onDeleteQuestion={this.handleDeleteQuestion}
                       onUpdateQuestion={this.handleUpdateQuestion}/>
@@ -121,6 +121,7 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   fetchSurvey = async () => {
     try {
       let survey: Survey = await surveysService.fetchSurvey(this.surveyId)
+      console.log('first state', survey);
       
       this.setState({
         loading: false,

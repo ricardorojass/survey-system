@@ -113,7 +113,7 @@ class SurveyModal extends React.Component<RouteComponentProps, State> {
   }
 
   redirectToSurveyDetail(surveyId: number) {
-    this.props.history.push(`/survey/${surveyId}`)
+    this.props.history.push(`/surveys/${surveyId}`)
   }
 
 }
