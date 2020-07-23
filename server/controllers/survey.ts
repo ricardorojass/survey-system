@@ -28,9 +28,8 @@ export async function createSurvey(req: Request, res: Response, next: any) {
     const user = res.locals.user
     let data: Survey = req.body
     data.userId = user.id
-    
+
     const surveyResponse = await surveysService.create(data)
-    
     res.json(surveyResponse)
   } catch (e) {
     if (e) {

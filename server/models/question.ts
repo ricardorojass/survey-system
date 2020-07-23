@@ -2,7 +2,6 @@ import knex from 'knex'
 const { Model } = require('objection')
 const knexConfig = require('../../knexfile')
 const SurveyModel = require('./survey')
-const OptionModel = require('./option')
 
 Model.knex(knex(knexConfig.development))
 
@@ -20,6 +19,7 @@ class QuestionModel extends Model {
   }
 
   static get relationMappings() {
+    const OptionModel = require('./option')
     return {
       survey: {
         relation: Model.BelongsToOneRelation,

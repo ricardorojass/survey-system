@@ -14,7 +14,7 @@ router.get('/me', requireUser, auth.getUser)
 
 // Surveys
 router.get('/surveys', requireUser, survey.getSurveys)
-router.get('/survey/:id', requireUser, survey.getSurvey)
+router.get('/surveys/:id', requireUser, survey.getSurvey)
 router.post('/surveys', requireUser, survey.createSurvey)
 router.put('/surveys/:id', requireUser, survey.updateSurvey)
 
