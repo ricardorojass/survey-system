@@ -6,6 +6,7 @@ import surveysService from '../services/surveysService';
 import SurveyTitle from '../components/SurveyTitle'
 import QuestionComponent from '../components/Question';
 import questionsService from '../services/questionsService';
+import { Options } from 'webpack';
 
 interface State {
   loading?: boolean
@@ -50,10 +51,19 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
                   description={survey.description}
                   onFieldChange={this.updateSurveyField} />
 
+                <button
+                  className="btn btn-primary btn-block mt-3"
+                  type="button"
+                  onClick={this.createQuestion}>
+                    Add question
+                </button>
+
                 { survey.questions.map(question => (
                     <QuestionComponent
                       key={question.title}
-                      question={question} />
+                      question={question}
+                      onDeleteQuestion={this.handleDeleteQuestion}
+                      onUpdateQuestion={this.handleUpdateQuestion}/>
                   )) }
               </form>
 
@@ -67,11 +77,45 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   updateSurveyField = (field, value) => {
     this.setState(prevState => {
       const newState = { survey: { ...prevState.survey }}
-      console.log('newState', newState);
       newState.survey[field] = value
       return newState
     }, async () => await surveysService.update(this.state.survey) )
     // llamar el servidor
+  }
+
+  createQuestion = (e) => {
+    e.preventDefault()
+    const question: Question = {
+      surveyId: this.surveyId, 
+      title: 'Untitled question',
+      options: [{ description: 'Option 1'}]
+    }
+    this.setState(state => {
+      const questions = state.survey.questions.concat(question)
+      return { ...state, survey: { ...state.survey, questions } }
+    }, async () => await questionsService.create(question))
+  }
+
+  handleDeleteQuestion = (questionId: number) => {
+    this.setState(state => {
+      const questions = state.survey.questions.filter(q => q.id != questionId)
+      return { ...state, survey: { ...state.survey, questions } }
+    }, async () => await questionsService.deleteById(questionId) )
+  }
+
+  handleUpdateQuestion = (id: number, field: string, value: string) => {
+    this.setState(state => {
+      const questions = state.survey.questions.map(question => {
+        if (question.id === id) {
+          question[field] = value
+        }
+        return question
+      })
+      return { ...state, survey: { ...state.survey, questions } }
+    }, async () => {
+      const updatedQuestion = this.state.survey.questions.find(q => q.id === id)
+      await questionsService.update(updatedQuestion)
+    })
   }
 
   fetchSurvey = async () => {

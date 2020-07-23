@@ -27,6 +27,8 @@ export async function createQuestion(req: Request, res: Response, next: any) {
     const surveyId = Number(req.params.id)
     let data: Question = req.body
     data.surveyId = surveyId
+    console.log('controller createQuestion', data);
+    
     
     const questionResponse = await questionsService.create(data)
     
@@ -47,7 +49,23 @@ export async function updateQuestion(req: Request, res: Response, next: any) {
     const data: Question = req.body
 
     await questionsService.update(surveyId, questionId, data)
-    res.status(201).send('Survey updated!')
+    res.status(204).send('Survey updated!')
+  } catch (e) {
+    if (e) {
+      res.status(422).json(e)
+    } else {
+      next(e)
+    }
+  }
+}
+
+export async function deleteQuestion(req: Request, res: Response, next: any) {
+  try {
+    
+    const { id } = req.params
+
+    await questionsService.deleteById(Number(id))
+    res.status(204).send('Question deleted!')
   } catch (e) {
     if (e) {
       res.status(422).json(e)
