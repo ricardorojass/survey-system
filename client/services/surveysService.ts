@@ -7,7 +7,7 @@ async function list(): Promise<Survey[]> {
 }
 
 async function fetchSurvey(id: string): Promise<Survey> {
-  const response = await axios.get(`/survey/${id}`)
+  const response = await axios.get(`/surveys/${id}`)
   return response.data
 }
 

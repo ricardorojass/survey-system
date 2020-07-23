@@ -26,7 +26,7 @@ const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion }: Pro
         </div>
         {/* todo: create option component */}
         { question.options.map(option =>
-          <div key={option.description} className="form-group">
+          <div key={option.id} className="form-group">
             <label>
               <input
                 className="mr-2 leading-tight"

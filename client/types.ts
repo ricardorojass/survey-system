@@ -32,7 +32,7 @@ export interface Survey {
 
 export interface Question {
   id?: number
-  surveyId?: number
+  surveyId?: string
   options?: Option[]
   title?: string
   description?: string

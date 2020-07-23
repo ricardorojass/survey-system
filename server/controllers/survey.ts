@@ -6,6 +6,7 @@ import surveys from '../services/surveys'
 export async function getSurvey(req: Request, res: Response, next: any) {
   try {
     const { id } = req.params
+
     const survey: Survey = await surveysService.findSurveyById(id)
     res.json(survey)
   } catch (error) {
@@ -28,13 +29,13 @@ export async function createSurvey(req: Request, res: Response, next: any) {
     const user = res.locals.user
     let data: Survey = req.body
     data.userId = user.id
-    
+
     const surveyResponse = await surveysService.create(data)
-    
     res.json(surveyResponse)
   } catch (e) {
     if (e) {
       res.status(422).json(e)
+      throw new Error('Cannot find survey')
     } else {
       next(e)
     }
