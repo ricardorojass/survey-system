@@ -63,7 +63,8 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
                       question={question}
                       onDeleteQuestion={this.handleDeleteQuestion}
                       onUpdateQuestion={this.handleUpdateQuestion}
-                      onUpdateOption={this.handleUpdateOption}/>
+                      onUpdateOption={this.handleUpdateOption}
+                      onAddOption={this.handleAddOption}/>
                   )) }
               </form>
 
@@ -114,6 +115,22 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
     }, async () => {
       const updatedQuestion = this.state.survey.questions.find(q => q.id === id)
       await questionsService.update(updatedQuestion)
+    })
+  }
+
+  handleAddOption = async (questionId: number, optionsCount: number) => {
+    const data: Option = { questionId, description: `Option ${optionsCount + 1}` }
+    let newOption = await optionsService.create(questionId, data)
+    
+    this.setState(state => {
+      const questions = state.survey.questions.map(question => {
+        if (question.id === questionId) {
+          // TODO: Evaluate concat instead of push
+          question.options.push(newOption)
+        }
+        return question
+      })
+      return { ...state, survey: { ...state.survey, questions } }
     })
   }
 

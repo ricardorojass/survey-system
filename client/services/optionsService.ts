@@ -1,7 +1,12 @@
 import axios from '../axios'
 import { Option } from '../types'
 
-async function update(questionId: number, optionId: number, value: string): Promise<any> {
+async function create(questionId: number, option: Option): Promise<Option> {
+  const response = await axios.post(`/surveys/questions/${questionId}/options`, option)
+  return response.data
+}
+
+async function update(questionId: number, optionId: number, value: string): Promise<Option> {
   const data: Option = { description: value }
   return await axios.put(`/surveys/questions/${questionId}/options/${optionId}`, data)
 }
@@ -15,5 +20,6 @@ async function update(questionId: number, optionId: number, value: string): Prom
 // }
 
 export default {
-  update
+  create,
+  update,
 }

@@ -6,10 +6,11 @@ interface Props {
   onUpdateQuestion: any,
   onDeleteQuestion: any,
   onUpdateOption: any,
+  onAddOption: any,
 }
 
-const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpdateOption }: Props) => {
-  console.log('q comp', question);
+const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpdateOption, onAddOption }: Props) => {
+  console.log('Q comp', question);
   
   return (
     <section className="bg-white shadow-lg mt-10">
@@ -28,11 +29,12 @@ const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpd
         { question.options.map(option =>
           <div
             key={option.id}
-            className="mb-6">
+            className="mb-3">
               <label>
                 <input
                   className="mr-2 leading-tight"
                   type="radio"
+                  disabled
                   name="option"
                   value={option.description}/>
                 <input
@@ -44,6 +46,16 @@ const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpd
               </label>
           </div>
         )}
+        <div className="mb-3">
+          <label>
+            <input
+              className="mr-2 leading-tight"
+              type="radio"
+              disabled
+              name="option"/>
+            <span className="ml-2" onClick={e => onAddOption(question.id, question.options.length)}>Add option</span>
+          </label>
+        </div>
         {/*body*/}
         {/*footer*/}
         <div className="flex items-center justify-end p-4 border-t border-solid border-gray-300">

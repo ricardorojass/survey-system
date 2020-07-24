@@ -23,10 +23,9 @@ export async function createQuestion(req: Request, res: Response, next: any) {
 export async function updateQuestion(req: Request, res: Response, next: any) {
   try {
     const questionId = req.params.id
-    const surveyId = req.params.survey_id
     const data: Question = req.body
 
-    await questionsService.update(surveyId, questionId, data)
+    await questionsService.update(questionId, data)
     res.status(204).send('Survey updated!')
   } catch (e) {
     if (e) {

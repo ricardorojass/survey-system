@@ -16,7 +16,7 @@ async function create(title: string, description: string): Promise<any> {
   return await axios.post('/surveys', survey)
 }
 
-async function update(surveyId: number, survey: Survey): Promise<Survey> {
+async function update(surveyId: string, survey: Survey): Promise<Survey> {
   return await axios.put(`/surveys/${surveyId}`, survey)
 }
 
