@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Question } from '../types'
-import questionsService from '../services/questionsService'
 
 interface Props {
   question?: Question,
   onUpdateQuestion: any,
   onDeleteQuestion: any,
+  onUpdateOption: any,
 }
 
-const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion }: Props) => {
+const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpdateOption }: Props) => {
   console.log('q comp', question);
   
   return (
@@ -26,16 +26,22 @@ const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion }: Pro
         </div>
         {/* todo: create option component */}
         { question.options.map(option =>
-          <div key={option.id} className="form-group">
-            <label>
-              <input
-                className="mr-2 leading-tight"
-                type="radio"
-                name="question-option"
-                value={option.description}
-              />
-              <span className="text-sm">{option.description}</span>
-            </label>
+          <div
+            key={option.id}
+            className="mb-6">
+              <label>
+                <input
+                  className="mr-2 leading-tight"
+                  type="radio"
+                  name="option"
+                  value={option.description}/>
+                <input
+                  className="text-sm border-t-0 border-l-0 border-r-0 border-b-0 w-10/12"
+                  type="text"
+                  name="description"
+                  value={option.description}
+                  onChange={e => onUpdateOption(question.id, option.id, e.target.name, e.target.value)}/>
+              </label>
           </div>
         )}
         {/*body*/}

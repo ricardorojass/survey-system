@@ -1,7 +1,6 @@
 import db from '../db'
-import { Survey, Question, Option } from '../types'
+import { Question, Option } from '../types'
 const QuestionModel = require('../models/question')
-const OptionModel = require('../models/option')
 
 const create = async (question: Question): Promise<any>  => {
   const data: Question = { surveyId: question.surveyId, title: question.title, description: '', required: false }

@@ -1,6 +1,6 @@
-import questionsService from '../services/questions'
-import { Survey, Question } from 'server/types'
 import { Request, Response } from 'express'
+import { Question } from 'server/types'
+import questionsService from '../services/questions'
 
 export async function createQuestion(req: Request, res: Response, next: any) {
   try {

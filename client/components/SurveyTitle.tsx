@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 interface Props {
-  index?: number
   title?: string
   description?: string,
   onFieldChange: any
