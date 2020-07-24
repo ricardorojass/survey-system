@@ -120,12 +120,12 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
 
   handleAddOption = async (questionId: number, optionsCount: number) => {
     const data: Option = { questionId, description: `Option ${optionsCount + 1}` }
-    let newOption = await optionsService.create(questionId, data)
+    let newOption = await optionsService.create(data)
     
     this.setState(state => {
       const questions = state.survey.questions.map(question => {
         if (question.id === questionId) {
-          // TODO: Evaluate concat instead of push
+          // TODO: Why concat doesn't work here?
           question.options.push(newOption)
         }
         return question

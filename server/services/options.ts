@@ -2,7 +2,7 @@ import db from '../db'
 import { Option } from "server/types"
 const OptionModel = require('../models/option')
 
-const create = async (option: Option): Promise<any>  => {
+const create = async (option: Option): Promise<Option>  => {
   let response
   try {
     [response] = await db("options").insert(option).returning('*')

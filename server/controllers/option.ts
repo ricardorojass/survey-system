@@ -4,11 +4,9 @@ import optionsService from '../services/options'
 
 export async function createOption(req: Request, res: Response, next: any) {
   try {
-    const { questionId } = req.params
     let data: Option = req.body
-    data.questionId = questionId
     
-    const optionResponse = await optionsService.create(data)
+    const optionResponse: Option = await optionsService.create(data)
     res.status(200).json(optionResponse)
   } catch (e) {
     if (e) {

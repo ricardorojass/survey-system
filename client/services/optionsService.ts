@@ -1,8 +1,8 @@
 import axios from '../axios'
 import { Option } from '../types'
 
-async function create(questionId: number, option: Option): Promise<Option> {
-  const response = await axios.post(`/surveys/questions/${questionId}/options`, option)
+async function create(option: Option): Promise<Option> {
+  const response = await axios.post(`/surveys/questions/options`, option)
   return response.data
 }
 
