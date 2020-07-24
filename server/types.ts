@@ -37,7 +37,7 @@ export interface Question {
 
 export interface Option {
   id?: number
-  questionId?: number
+  questionId?: string
   description?: string
   checked?: boolean
   createdAt?: Date

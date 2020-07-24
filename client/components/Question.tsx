@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Question } from '../types'
-import questionsService from '../services/questionsService'
 
 interface Props {
   question?: Question,
   onUpdateQuestion: any,
   onDeleteQuestion: any,
+  onUpdateOption: any,
+  onAddOption: any,
 }
 
-const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion }: Props) => {
-  console.log('q comp', question);
+const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpdateOption, onAddOption }: Props) => {
+  console.log('Q comp', question);
   
   return (
     <section className="bg-white shadow-lg mt-10">
@@ -26,18 +27,35 @@ const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion }: Pro
         </div>
         {/* todo: create option component */}
         { question.options.map(option =>
-          <div key={option.id} className="form-group">
-            <label>
-              <input
-                className="mr-2 leading-tight"
-                type="radio"
-                name="question-option"
-                value={option.description}
-              />
-              <span className="text-sm">{option.description}</span>
-            </label>
+          <div
+            key={option.id}
+            className="mb-3">
+              <label>
+                <input
+                  className="mr-2 leading-tight"
+                  type="radio"
+                  disabled
+                  name="option"
+                  value={option.description}/>
+                <input
+                  className="text-sm border-t-0 border-l-0 border-r-0 border-b-0 w-10/12"
+                  type="text"
+                  name="description"
+                  value={option.description}
+                  onChange={e => onUpdateOption(question.id, option.id, e.target.name, e.target.value)}/>
+              </label>
           </div>
         )}
+        <div className="mb-3">
+          <label>
+            <input
+              className="mr-2 leading-tight"
+              type="radio"
+              disabled
+              name="option"/>
+            <span className="ml-2" onClick={e => onAddOption(question.id, question.options.length)}>Add option</span>
+          </label>
+        </div>
         {/*body*/}
         {/*footer*/}
         <div className="flex items-center justify-end p-4 border-t border-solid border-gray-300">

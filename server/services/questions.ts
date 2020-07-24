@@ -1,7 +1,6 @@
 import db from '../db'
-import { Survey, Question, Option } from '../types'
+import { Question, Option } from '../types'
 const QuestionModel = require('../models/question')
-const OptionModel = require('../models/option')
 
 const create = async (question: Question): Promise<any>  => {
   const data: Question = { surveyId: question.surveyId, title: question.title, description: '', required: false }
@@ -12,7 +11,7 @@ const create = async (question: Question): Promise<any>  => {
   return response
 }
 
-const update = async (surveyId: string, questionId: string, question: Question): Promise<any>  => {
+const update = async (questionId: string, question: Question): Promise<any>  => {
   const response = await QuestionModel.query().updateAndFetchById(questionId, question)
   return response
 }
@@ -24,7 +23,7 @@ const deleteById = async (questionId: number): Promise<any>  => {
 const insertOptions = async (questionId: number, options: Option[]) => {
   options.forEach(async option => {
     const data: Option = {
-      questionId: questionId,
+      questionId: questionId.toString(),
       description: option.description,
     }
     try {

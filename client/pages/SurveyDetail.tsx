@@ -6,7 +6,7 @@ import surveysService from '../services/surveysService';
 import SurveyTitle from '../components/SurveyTitle'
 import QuestionComponent from '../components/Question';
 import questionsService from '../services/questionsService';
-import { Options } from 'webpack';
+import optionsService from '../services/optionsService';
 
 interface State {
   loading?: boolean
@@ -46,7 +46,6 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
               <p className="text-2xl pl-6">Edit survey</p>
               <form>
                 <SurveyTitle
-                  index={survey.id}
                   title={survey.title}
                   description={survey.description}
                   onFieldChange={this.updateSurveyField} />
@@ -63,7 +62,9 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
                       key={question.id}
                       question={question}
                       onDeleteQuestion={this.handleDeleteQuestion}
-                      onUpdateQuestion={this.handleUpdateQuestion}/>
+                      onUpdateQuestion={this.handleUpdateQuestion}
+                      onUpdateOption={this.handleUpdateOption}
+                      onAddOption={this.handleAddOption}/>
                   )) }
               </form>
 
@@ -79,8 +80,7 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
       const newState = { survey: { ...prevState.survey }}
       newState.survey[field] = value
       return newState
-    }, async () => await surveysService.update(this.state.survey) )
-    // llamar el servidor
+    }, async () => await surveysService.update(this.surveyId, this.state.survey) )
   }
 
   createQuestion = (e) => {
@@ -116,6 +116,39 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
       const updatedQuestion = this.state.survey.questions.find(q => q.id === id)
       await questionsService.update(updatedQuestion)
     })
+  }
+
+  handleAddOption = async (questionId: number, optionsCount: number) => {
+    const data: Option = { questionId, description: `Option ${optionsCount + 1}` }
+    let newOption = await optionsService.create(questionId, data)
+    
+    this.setState(state => {
+      const questions = state.survey.questions.map(question => {
+        if (question.id === questionId) {
+          // TODO: Evaluate concat instead of push
+          question.options.push(newOption)
+        }
+        return question
+      })
+      return { ...state, survey: { ...state.survey, questions } }
+    })
+  }
+
+  handleUpdateOption = (questionId: number, optionId: number, field: string, value: string) => {
+    this.setState(state => {
+      const questions = state.survey.questions.map(question => {
+        if (question.id === questionId) {
+          question.options.map(option => {
+            if (option.id === optionId) {
+              option[field] = value
+            }
+            return option
+          })
+        }
+        return question
+      })
+      return { ...state, survey: { ...state.survey.questions, questions } }
+    }, async () => optionsService.update(questionId, optionId, value))
   }
 
   fetchSurvey = async () => {
