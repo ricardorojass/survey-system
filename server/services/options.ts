@@ -16,7 +16,12 @@ const update = async (optionId: string, option: Option): Promise<Option>  => {
   return await OptionModel.query().updateAndFetchById(optionId, option)
 }
 
+const deleteById = async (questionId: number): Promise<number>  => {
+  return await OptionModel.query().deleteById(questionId)
+}
+
 export default {
   create,
-  update
+  update,
+  deleteById,
 }

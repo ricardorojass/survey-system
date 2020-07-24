@@ -34,7 +34,17 @@ export async function updateOption(req: Request, res: Response, next: any) {
   }
 }
 
-export default {
-  createOption,
-  updateOption
+export async function deleteOption(req: Request, res: Response, next: any) {
+  try {
+    const { id } = req.params
+
+    await optionsService.deleteById(Number(id))
+    res.status(204)
+  } catch (e) {
+    if (e) {
+      res.status(422).json(e)
+    } else {
+      next(e)
+    }
+  }
 }

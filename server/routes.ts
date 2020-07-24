@@ -27,5 +27,6 @@ router.delete('/surveys/questions/:id', requireUser, question.deleteQuestion)
 // Options
 router.post('/surveys/questions/options', requireUser, option.createOption)
 router.put('/surveys/questions/:questionId/options/:optionId', requireUser, option.updateOption)
+router.delete('/surveys/questions/options/:id', requireUser, option.deleteOption)
 
 export default router

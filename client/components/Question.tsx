@@ -7,9 +7,10 @@ interface Props {
   onDeleteQuestion: any,
   onUpdateOption: any,
   onAddOption: any,
+  onDeleteOption: any,
 }
 
-const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpdateOption, onAddOption }: Props) => {
+const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpdateOption, onAddOption, onDeleteOption }: Props) => {
   console.log('Q comp', question);
   
   return (
@@ -29,8 +30,8 @@ const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpd
         { question.options.map(option =>
           <div
             key={option.id}
-            className="mb-3">
-              <label>
+            className="mb-3 flex items-center">
+              <label className="flex-grow">
                 <input
                   className="mr-2 leading-tight"
                   type="radio"
@@ -44,6 +45,9 @@ const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpd
                   value={option.description}
                   onChange={e => onUpdateOption(question.id, option.id, e.target.name, e.target.value)}/>
               </label>
+              <div>
+                <span onClick={e => onDeleteOption(question.id, option.id)}>X</span>
+              </div>
           </div>
         )}
         <div className="mb-3">

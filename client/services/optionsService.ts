@@ -11,15 +11,12 @@ async function update(questionId: number, optionId: number, value: string): Prom
   return await axios.put(`/surveys/questions/${questionId}/options/${optionId}`, data)
 }
 
-// async function update(question: Question): Promise<any> {
-//   await axios.put(`/surveys/${question.surveyId}/questions/${question.id}`, question)
-// }
-
-// async function deleteById(questionId: number): Promise<any> {
-//   await axios.delete(`/surveys/questions/${questionId}`)
-// }
+async function deleteById(optionId: number): Promise<any> {
+  await axios.delete(`/surveys/questions/options/${optionId}`)
+}
 
 export default {
   create,
   update,
+  deleteById,
 }
