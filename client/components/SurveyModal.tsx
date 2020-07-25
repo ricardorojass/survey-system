@@ -18,14 +18,14 @@ class SurveyModal extends React.Component<RouteComponentProps, State> {
 
     this.state = { title: null, description: null, showModal: false, error: null}
     surveyUIService.subscribe((_: boolean) => {
-      this.setState({ showModal: surveyUIService.isModalOpen() })
+      this.setState({ showModal: surveyUIService.isSurveyModalOpen() })
     })
   }
 
   render() {
     if (this.state.showModal) {
       return (
-        <>
+        <div>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl w-2/5">
               {/*content*/}
@@ -83,7 +83,7 @@ class SurveyModal extends React.Component<RouteComponentProps, State> {
             </div>
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
+        </div>
       )
     } else {
       return ( null )
@@ -109,7 +109,7 @@ class SurveyModal extends React.Component<RouteComponentProps, State> {
   }
 
   closeModal = () => {
-    surveyUIService.closeModal()
+    surveyUIService.closeSurveyModal()
   }
 
   redirectToSurveyDetail(surveyId: number) {
