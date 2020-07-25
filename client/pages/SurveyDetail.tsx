@@ -43,7 +43,6 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
         <div className="flex">
           <div className="mx-auto p-4 mt-6 w-6/12">
             <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
-              <p className="text-2xl text-center">Edit survey</p>
               <form>
                 <SurveyTitle
                   title={survey.title}

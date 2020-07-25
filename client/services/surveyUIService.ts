@@ -3,25 +3,42 @@ import Store from '../store'
 import { Survey } from '../types'
 
 function initialState() {
-  return { isModalOpen: false, currentSurvey: null }
+  return {
+    isSurveyModalOpen: false,
+    isShareModalOpen: false,
+    currentSurvey: null
+  }
 }
 
 interface SurveyUI {
-  isModalOpen?: boolean
+  isSurveyModalOpen?: boolean
+  isShareModalOpen?: boolean
 }
 
 class SurveyUIService extends Store<SurveyUI> {
 
-  openModal() {
-    this.setState({ isModalOpen: true })
-  }
-  
-  closeModal() {
-    this.setState({ isModalOpen: false })
+  openSurveyModal() {
+    this.setState({ isSurveyModalOpen: true })
   }
 
-  isModalOpen() {
-    return this.state.isModalOpen
+  openShareModal() {
+    this.setState({ isShareModalOpen: true })
+  }
+  
+  closeSurveyModal() {
+    this.setState({ isSurveyModalOpen: false })
+  }
+
+  closeShareModal() {
+    this.setState({ isShareModalOpen: false })
+  }
+
+  isSurveyModalOpen() {
+    return this.state.isSurveyModalOpen
+  }
+
+  isShareModalOpen() {
+    return this.state.isShareModalOpen
   }
 }
 

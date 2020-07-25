@@ -6,6 +6,10 @@ module.exports = {
         tomato: {
           lighter: '#fa7d6a',
           default: '#FE654F'
+        },
+        champagne: {
+          lighter: '#FED99B',
+          default: '#FED18C'
         }
       }
     },

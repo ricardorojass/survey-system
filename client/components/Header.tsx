@@ -5,9 +5,11 @@ import surveyUIService from '../services/surveyUIService'
 import { User } from '../types'
 
 import SurveyModal from '../components/SurveyModal'
+import ShareModal from '../components/ShareModal'
 
 interface State {
-  isAuthenticated?: boolean
+  isAuthenticated?: boolean,
+  isSurveysListView?: boolean
 }
 
 class Header extends React.Component<RouteComponentProps, State> {
@@ -15,7 +17,10 @@ class Header extends React.Component<RouteComponentProps, State> {
   constructor(props: RouteComponentProps) {
     super(props)
 
-    this.state = { isAuthenticated: authService.isAuthenticated() }
+    this.state = {
+      isAuthenticated: authService.isAuthenticated(),
+      isSurveysListView: this.isSurveyListView()
+    }
     authService.subscribe((_: User) => {
       this.setState({ isAuthenticated: authService.isAuthenticated() })
     })
@@ -25,14 +30,29 @@ class Header extends React.Component<RouteComponentProps, State> {
     return (
       <header className="bg-indigo-100">
         <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
-          <button onClick={this.toggleModal}>
-            <img className="fill-current w-12" src="/icons/add-solid.svg"/>
-          </button>
+          { 
+            this.state.isSurveysListView 
+              ? 
+              <button onClick={this.toggleModal}>
+                <img className="fill-current w-12" src="/icons/add-solid.svg"/>
+              </button>
+              :
+              <span className="text-2xl text-center">Edit your survey</span>
+          }
           <SurveyModal />
           <div>
-            {/* <button className="bg-tomato-default hover:bg-tomato-lighter text-white font-bold py-2 px-4 border border-blue-700 rounded">
-              Button
-            </button> */}
+            {
+              this.state.isSurveysListView
+                ?
+                null
+                :
+                <button
+                  className="bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4"
+                  onClick={this.showShareModal}>
+                  Share
+                </button>
+            }
+            <ShareModal />
             <span className="pl-4">
               { this.state.isAuthenticated ? <a onClick={this.logout} href="#">Logout</a> : <a onClick={this.login} href="#">Sign in</a> }
             </span>
@@ -60,8 +80,19 @@ class Header extends React.Component<RouteComponentProps, State> {
   }
 
   toggleModal = () => {
-    surveyUIService.openModal()
+    surveyUIService.openSurveyModal()
   }
+
+  showShareModal = () => {
+    surveyUIService.openShareModal()
+  }
+
+  isSurveyListView(): boolean {
+    const urlLength = this.props.location.pathname.split('/').length
+    const doesContainOnlySurveys = this.props.location.pathname.split('/')[1] === 'surveys'
+    return urlLength === 2 && doesContainOnlySurveys
+  }
+
 }
 
 export default withRouter(Header)
