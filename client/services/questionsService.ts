@@ -1,7 +1,7 @@
 import axios from '../axios'
 import { Question } from '../types'
 
-async function create(question: Question): Promise<any> {
+async function create(question: Question): Promise<Question> {
   return await axios.post(`/surveys/${question.surveyId}/questions`, question)
 }
 

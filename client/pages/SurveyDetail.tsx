@@ -43,7 +43,7 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
         <div className="flex">
           <div className="mx-auto p-4 mt-6 w-6/12">
             <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
-              <p className="text-2xl pl-6">Edit survey</p>
+              <p className="text-2xl text-center">Edit survey</p>
               <form>
                 <SurveyTitle
                   title={survey.title}
@@ -64,7 +64,8 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
                       onDeleteQuestion={this.handleDeleteQuestion}
                       onUpdateQuestion={this.handleUpdateQuestion}
                       onUpdateOption={this.handleUpdateOption}
-                      onAddOption={this.handleAddOption}/>
+                      onAddOption={this.handleAddOption}
+                      onDeleteOption={this.handleDeleteOption}/>
                   )) }
               </form>
 
@@ -119,19 +120,18 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   }
 
   handleAddOption = async (questionId: number, optionsCount: number) => {
-    const data: Option = { questionId, description: `Option ${optionsCount + 1}` }
-    let newOption = await optionsService.create(questionId, data)
+    const newOption: Option = { questionId, description: `Option ${optionsCount + 1}` }
     
     this.setState(state => {
       const questions = state.survey.questions.map(question => {
         if (question.id === questionId) {
-          // TODO: Evaluate concat instead of push
+          // TODO: Why concat doesn't work here?
           question.options.push(newOption)
         }
         return question
       })
       return { ...state, survey: { ...state.survey, questions } }
-    })
+    }, async () => await optionsService.create(newOption))
   }
 
   handleUpdateOption = (questionId: number, optionId: number, field: string, value: string) => {
@@ -149,6 +149,20 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
       })
       return { ...state, survey: { ...state.survey.questions, questions } }
     }, async () => optionsService.update(questionId, optionId, value))
+  }
+
+  handleDeleteOption = (questionId: number, optionId: number) => {
+    
+    this.setState(state => {
+      const questions = state.survey.questions.map(question => {
+        if (question.id === questionId) {
+          const idx = question.options.findIndex(o => o.id === optionId)
+          question.options.splice(idx, 1)
+        }
+        return question
+      })
+      return { ...state, survey: { ...state.survey.questions, questions } }
+    }, async () => await optionsService.deleteById(optionId))
   }
 
   fetchSurvey = async () => {
