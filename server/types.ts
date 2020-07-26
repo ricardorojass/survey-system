@@ -43,3 +43,10 @@ export interface Option {
   createdAt?: Date
   updatedAt?: Date
 }
+
+export interface SurveyResponse {
+  id?: number
+  surveyId?: number
+  createdAt?: Date
+  updatedAt?: Date
+}

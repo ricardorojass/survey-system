@@ -87,7 +87,7 @@ class Header extends React.Component<RouteComponentProps, State> {
     surveyUIService.openShareModal()
   }
 
-  isSurveyListView(): boolean {
+  isSurveyListView() {
     const urlLength = this.props.location.pathname.split('/').length
     const doesContainOnlySurveys = this.props.location.pathname.split('/')[1] === 'surveys'
     return urlLength === 2 && doesContainOnlySurveys

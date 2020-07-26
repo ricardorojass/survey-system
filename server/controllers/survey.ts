@@ -1,7 +1,6 @@
 import surveysService from '../services/surveys'
 import { Survey } from 'server/types'
 import { Request, Response } from 'express'
-import surveys from '../services/surveys'
 
 export async function getSurvey(req: Request, res: Response, next: any) {
   try {
