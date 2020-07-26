@@ -3,6 +3,7 @@ import * as auth from './controllers/auth'
 import * as survey from './controllers/survey'
 import * as question from './controllers/question'
 import * as option from './controllers/option'
+import * as surveyResponse from './controllers/response'
 import { requireUser } from './middlewares'
 
 
@@ -18,6 +19,9 @@ router.get('/surveys', requireUser, survey.getSurveys)
 router.get('/surveys/:id', requireUser, survey.getSurvey)
 router.post('/surveys', requireUser, survey.createSurvey)
 router.put('/surveys/:id', requireUser, survey.updateSurvey)
+
+// Responses
+router.get('/surveys/:id/response', requireUser, surveyResponse.createResponse)
 
 // Questions
 router.post('/surveys/:id/questions', requireUser, question.createQuestion)

@@ -1,5 +1,5 @@
 import axios from '../axios'
-import { Survey } from '../types'
+import { Survey, SurveyResponse } from '../types'
 
 async function list(): Promise<Survey[]> {
   const response = await axios.get('/surveys')
@@ -8,6 +8,11 @@ async function list(): Promise<Survey[]> {
 
 async function fetchSurvey(id: string): Promise<Survey> {
   const response = await axios.get(`/surveys/${id}`)
+  return response.data
+}
+
+async function getSurveyResponseId(surveyId: string): Promise<SurveyResponse> {
+  const response = await axios.get(`/surveys/${surveyId}/response`)
   return response.data
 }
 
@@ -22,6 +27,7 @@ async function update(surveyId: string, survey: Survey): Promise<Survey> {
 
 export default {
   fetchSurvey,
+  getSurveyResponseId,
   list,
   create,
   update

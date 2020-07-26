@@ -44,8 +44,22 @@ export interface Question {
 export interface Option {
   id?: number
   questionId?: number
-  description?: string
-  checked?: boolean
+  description?: string,
+  selected?: string
+}
+
+export interface SurveyResponse {
+  id?: number
+  surveyId?: number
   createdAt?: Date
   updatedAt?: Date
 }
+
+export interface Answer {
+  id?: number
+  responseId?: number
+  optionId?: number
+  createdAt?: Date
+  updatedAt?: Date
+}
+
