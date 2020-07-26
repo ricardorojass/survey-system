@@ -5,14 +5,14 @@ import { Survey, SurveyResponse, Answer } from '../types';
 import produce from 'immer'
 import surveysService from '../services/surveysService';
 import QuestionResponse from '../components/QuestionResponse';
+import answersService from '../services/answersService';
 
 interface State {
   loading?: boolean
   error?: any
   info?: any
   survey?: Survey
-  response?: SurveyResponse
-  answers?: Answer[]
+  answers?: any
 }
 
 interface Props {
@@ -22,7 +22,8 @@ interface Props {
 const initialState = {
   loading: true,
   error: null,
-  survey: { questions: [] }
+  survey: { questions: [] },
+  answers: {}
 }
 
 export default class SurveyResponseView extends React.Component<RouteComponentProps<Props>, State> {
@@ -85,6 +86,7 @@ export default class SurveyResponseView extends React.Component<RouteComponentPr
                     <QuestionResponse
                       key={question.id}
                       question={question}
+                      selectedOption={this.state.answers[question.id]}
                       onUpdateQuestion={this.handleOptionChange}/>
                   ))
                 }
@@ -125,15 +127,10 @@ export default class SurveyResponseView extends React.Component<RouteComponentPr
     }
   }
 
-  handleOptionChange = (description: string, questionId: number, optionId: number) => {
-    const questionIdx = this.state.survey.questions.findIndex(q => q.id === questionId)
-    const optionIdx = this.state.survey.questions[questionIdx].options.findIndex(o => o.id === optionId)
-    const surveyState = this.state.survey
-    const newState = produce(surveyState, draftState => {
-      draftState.questions[questionIdx].options[optionIdx].selected = description
-    })
-
-    this.setState({ survey: newState })
+  handleOptionChange = (questionId: number, optionId: number) => {
+    this.setState(state => ({
+      answers: { ...state.answers, [questionId]: optionId }
+    }))
   }
   
   handleSubmit = async formSubmitEvent => {
