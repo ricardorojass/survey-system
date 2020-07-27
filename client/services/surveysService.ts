@@ -11,11 +11,6 @@ async function fetchSurvey(id: string): Promise<Survey> {
   return response.data
 }
 
-async function getSurveyResponseId(surveyId: string): Promise<SurveyResponse> {
-  const response = await axios.get(`/surveys/${surveyId}/response`)
-  return response.data
-}
-
 async function create(title: string, description: string): Promise<any> {
   const survey: Survey = { title: title, description: description, headerUrl: '', themeColor: '', backgroundColor: '', fontStyle: '' }
   return await axios.post('/surveys', survey)
@@ -27,7 +22,6 @@ async function update(surveyId: string, survey: Survey): Promise<Survey> {
 
 export default {
   fetchSurvey,
-  getSurveyResponseId,
   list,
   create,
   update

@@ -2,7 +2,6 @@ import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import surveyUIService from '../services/surveyUIService'
 import surveysService from '../services/surveysService'
-import { Survey } from '../types'
 
 interface State {
   title?: string

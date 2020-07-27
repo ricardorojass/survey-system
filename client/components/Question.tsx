@@ -63,14 +63,14 @@ const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpd
         {/*body*/}
         {/*footer*/}
         <div className="flex items-center justify-end p-4 border-t border-solid border-gray-300">
-          <button
+          {/* <button
             className="text-green-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
             type="button"
             style={{ transition: "all .15s ease" }}
             onClick={ this.closeModal }
           >
             Duplicate
-          </button>
+          </button> */}
           <button
             className="text-red-500 font-bold uppercase text-sm px-6 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
             type="button"

@@ -45,7 +45,7 @@ class ShareModal extends React.Component<RouteComponentProps, State> {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <span>Link</span>
-                  <div><span>{this.state.surveyUrl}</span></div>
+                  <p className="italic text-blue-600 pt-3">{this.state.surveyUrl}</p>
                 </div>
               </div>
             </div>
@@ -63,7 +63,8 @@ class ShareModal extends React.Component<RouteComponentProps, State> {
   }
 
   getSurveyUrl() {
-    const url = 'http://localhost/survey/queponeraqui'
+    const path = this.props.location.pathname + '/surveyResponse'
+    const url = `http://localhost:3000${path}`
     this.setState({ surveyUrl: url })
   }
 }

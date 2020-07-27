@@ -1,16 +1,29 @@
 import db from '../db'
-import { Survey, SurveyResponse } from '../types'
-const SurveyModel = require('../models/survey')
+import { SurveyResponse, Answer } from '../types'
+import * as answerController from '../controllers/answer';
+const ResponseModel = require('../models/response')
 
-
-const create = async (surveyReponse: SurveyResponse): Promise<number>  => {
+const create = async (surveyId: number, answers: number[]): Promise<SurveyResponse>  => {
   // Todo: Use Objection
-  const [response] = await db("responses").insert(surveyReponse).returning('id')
-  console.log('postgres', response);
+  let surveyResponseBody: SurveyResponse = { surveyId }
   
-  return response
+  let surveyResponseId
+  try {
+    [surveyResponseId] = await db("responses").insert(surveyResponseBody).returning('id')
+  } catch (e) {
+    console.log('surveyResponse Error', e);
+  }
+
+  await answerController.createAnswers(surveyResponseId, answers)
+  return surveyResponseId
+}
+
+const findById = async (responseId: number): Promise<SurveyResponse> => {
+  console.log('findById');
+  return await ResponseModel.query().findById(responseId).returning('*')
 }
 
 export default {
   create,
+  findById,
 }

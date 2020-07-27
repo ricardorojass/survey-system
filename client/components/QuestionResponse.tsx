@@ -3,14 +3,15 @@ import { Question } from '../types'
 
 interface Props {
   question?: Question,
-  onUpdateQuestion: any
+  onUpdateQuestion: any,
+  selectedOption: any
 }
 
-const QuestionResponse = ({ question, onUpdateQuestion }: Props) => {
+const QuestionResponse = ({ question, onUpdateQuestion, selectedOption }: Props) => {
   console.log('Q comp', question);
   
   return (
-    <section key={question.id} className="bg-white shadow-lg mt-10">
+    <section className="bg-white shadow-lg mt-10">
       <div className="px-6 pt-4">
         {/*body*/}
         <p>{question.title}</p>
@@ -23,18 +24,14 @@ const QuestionResponse = ({ question, onUpdateQuestion }: Props) => {
                 <input
                   className="mr-2 leading-tight"
                   type="radio"
-                  name="option"
-                  value={option.description}
-                  checked={option.selected === option.description}
-                  onChange={e => onUpdateQuestion(e.target.value, question.id, option.id)}/>
+                  name={`option-${option.id}`}
+                  checked={ option.id === selectedOption }
+                  onChange={e => onUpdateQuestion(question.id, option.id)}/>
                 <span>{option.description}</span>
               </label>
           </div>
         )}
         {/*end body*/}
-        {/*Footer*/}
-
-        {/*end Footer*/}
       </div>
     </section>  
   )

@@ -5,10 +5,14 @@ const QuestionModel = require('../models/question')
 const create = async (question: Question): Promise<any>  => {
   const data: Question = { surveyId: question.surveyId, title: question.title, description: '', required: false }
 
-  const [response] = await db("questions").insert(data).returning('*')
-  insertOptions(response.id, question.options)
+  const [questionResponse] = await db("questions").insert(data).returning('*')
+  await insertOptions(questionResponse.id, question.options)
 
-  return response
+  const [questionGraph] = await QuestionModel.query()
+    .where('questions.id', questionResponse.id )
+    .withGraphJoined('options')
+
+  return questionGraph
 }
 
 const update = async (questionId: string, question: Question): Promise<any>  => {
@@ -20,7 +24,7 @@ const deleteById = async (questionId: number): Promise<any>  => {
   await QuestionModel.query().deleteById(questionId)
 }
 
-const insertOptions = async (questionId: number, options: Option[]) => {
+async function insertOptions(questionId: number, options: Option[])  {
   options.forEach(async option => {
     const data: Option = {
       questionId: questionId.toString(),

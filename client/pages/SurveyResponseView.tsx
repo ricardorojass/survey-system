@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Survey, SurveyResponse, Answer } from '../types';
 
 import produce from 'immer'
 import surveysService from '../services/surveysService';
 import QuestionResponse from '../components/QuestionResponse';
+import surveyResponseService from '../services/responsesService';
 
 interface State {
   loading?: boolean
   error?: any
   info?: any
   survey?: Survey
-  response?: SurveyResponse
-  answers?: Answer[]
+  answers?: any
 }
 
 interface Props {
@@ -22,10 +22,10 @@ interface Props {
 const initialState = {
   loading: true,
   error: null,
-  survey: { questions: [] }
+  survey: { questions: [] },
+  answers: {}
 }
-
-export default class SurveyResponseView extends React.Component<RouteComponentProps<Props>, State> {
+class SurveyResponseView extends React.Component<RouteComponentProps<Props>, State> {
   surveyId: string
 
   constructor(props: RouteComponentProps<Props>) {
@@ -85,6 +85,7 @@ export default class SurveyResponseView extends React.Component<RouteComponentPr
                     <QuestionResponse
                       key={question.id}
                       question={question}
+                      selectedOption={this.state.answers[question.id]}
                       onUpdateQuestion={this.handleOptionChange}/>
                   ))
                 }
@@ -116,30 +117,21 @@ export default class SurveyResponseView extends React.Component<RouteComponentPr
     }
   }
 
-  getResponseID = async () => {
-    try {
-      let responseId = await surveysService.getSurveyResponseId(this.surveyId)
-      this.setState({response: { id: Number(responseId) } })
-    } catch (e) {
-      
-    }
-  }
 
-  handleOptionChange = (description: string, questionId: number, optionId: number) => {
-    const questionIdx = this.state.survey.questions.findIndex(q => q.id === questionId)
-    const optionIdx = this.state.survey.questions[questionIdx].options.findIndex(o => o.id === optionId)
-    const surveyState = this.state.survey
-    const newState = produce(surveyState, draftState => {
-      draftState.questions[questionIdx].options[optionIdx].selected = description
-    })
-
-    this.setState({ survey: newState })
+  handleOptionChange = (questionId: number, optionId: number) => {
+    this.setState(state => ({
+      answers: { ...state.answers, [questionId]: optionId }
+    }))
   }
   
-  handleSubmit = async formSubmitEvent => {
-    formSubmitEvent.preventDefault()
-    console.log('submit');
-    
+  handleSubmit = async e => {
+    e.preventDefault()
+    const answers: Answer[] = Object.values(this.state.answers)
+    await surveyResponseService.create(this.surveyId, answers)
+    const url = `/surveys/${this.surveyId}/surveySubmitted`
+    this.props.history.push(url)
   }
 
 }
+
+export default withRouter(SurveyResponseView)

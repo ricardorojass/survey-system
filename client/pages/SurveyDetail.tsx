@@ -83,17 +83,19 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
     }, async () => await surveysService.update(this.surveyId, this.state.survey) )
   }
 
-  createQuestion = (e) => {
+  createQuestion = async (e) => {
     e.preventDefault()
-    const question: Question = {
+    
+    const questionBody: Question = {
       surveyId: this.surveyId, 
       title: 'Untitled question',
       options: [{ description: 'Option 1'}]
     }
+    const newQuestion =  await questionsService.create(questionBody)
     this.setState(state => {
-      const questions = state.survey.questions.concat(question)
+      const questions = state.survey.questions.concat(newQuestion)
       return { ...state, survey: { ...state.survey, questions } }
-    }, async () => await questionsService.create(question))
+    })
   }
 
   handleDeleteQuestion = (questionId: number) => {
@@ -119,8 +121,8 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   }
 
   handleAddOption = async (questionId: number, optionsCount: number) => {
-    const newOption: Option = { questionId, description: `Option ${optionsCount + 1}` }
-    
+    const optionBody: Option = { questionId, description: `Option ${optionsCount + 1}` }
+    const newOption = await optionsService.create(optionBody)
     this.setState(state => {
       const questions = state.survey.questions.map(question => {
         if (question.id === questionId) {
@@ -130,7 +132,7 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
         return question
       })
       return { ...state, survey: { ...state.survey, questions } }
-    }, async () => await optionsService.create(newOption))
+    })
   }
 
   handleUpdateOption = (questionId: number, optionId: number, field: string, value: string) => {
