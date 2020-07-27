@@ -73,7 +73,7 @@ class Register extends React.Component<RouteComponentProps, State> {
       
       const data: User = { name, email, password }
       await authService.signup(data)
-      
+      this.props.history.push('/surveys')
     } catch (e) {
       console.log(e)      
     }

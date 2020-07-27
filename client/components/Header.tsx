@@ -33,11 +33,11 @@ class Header extends React.Component<RouteComponentProps, State> {
   render() {
     const { isAuthenticated, isSurveysListView, isSurveyEditMode, isSurveyResponseORSubmittedView } = this.state
 
-    if (isSurveyResponseORSubmittedView) {
+    if (!isAuthenticated) {
       return ( null ) 
     }
 
-    if (!isAuthenticated) {
+    if (isAuthenticated && isSurveyResponseORSubmittedView) {
       return ( null ) 
     }
 
@@ -81,6 +81,8 @@ class Header extends React.Component<RouteComponentProps, State> {
         </header>
       )
     }
+
+    return ( null )
     // TODO: Return default UI
   }
 
