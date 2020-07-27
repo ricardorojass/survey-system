@@ -12,8 +12,6 @@ app.use(express.static(path.resolve(__dirname, '../client')))
 
 app.use(setUser)
 app.use('/api', routes)
-console.log('processEnv', process.env.DATABASE_URL);
-console.log('processEnv', process.env.NODE_ENV);
 
 if (isDev) {
   const env = process.env.NODE_ENV == 'test' ? "Test" : "Development"
