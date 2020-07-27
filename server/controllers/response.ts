@@ -1,17 +1,15 @@
-import { SurveyResponse } from 'server/types'
+import { SurveyResponse, Answer } from 'server/types'
 import { Request, Response } from 'express'
 import responseService from '../services/responses'
 
 export async function createResponse(req: Request, res: Response, next: any) {
   try {
-    console.log('createResponseController', req.params);
-    
-    const { surveyId } = req.params
-    let data: SurveyResponse = req.body
-    data.surveyId = Number(surveyId)
+    const surveyId = Number(req.params.id)
+    const answers: number[] = req.body
 
-    const surveyResponseId: number = await responseService.create(data)
-    res.json(surveyResponseId)
+    await responseService.create(surveyId, answers)
+
+    res.status(200).send('Response created succesfully!')
   } catch (e) {
     if (e) {
       res.status(422).json(e)
@@ -21,3 +19,19 @@ export async function createResponse(req: Request, res: Response, next: any) {
     }
   }
 }
+
+export async function findResponseById(req: Request, res: Response, next: any) {
+  try {
+    console.log('findResponseById', req.params)
+    res.json({})
+  } catch (e) {
+    if (e) {
+      res.status(422).json(e)
+      throw new Error('Response cannot be created')
+    } else {
+      next(e)
+    }
+  }
+}
+
+

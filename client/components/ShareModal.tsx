@@ -63,7 +63,7 @@ class ShareModal extends React.Component<RouteComponentProps, State> {
   }
 
   getSurveyUrl() {
-    const url = 'http://localhost/survey/queponeraqui'
+    const url = 'http://localhost/surveyResponse'
     this.setState({ surveyUrl: url })
   }
 }

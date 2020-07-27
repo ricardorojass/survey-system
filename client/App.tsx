@@ -13,6 +13,7 @@ import Register from './pages/Register'
 import SurveyListView from './pages/SurveyListView'
 import SurveyDetailView from './pages/SurveyDetail'
 import SurveyResponseView from './pages/SurveyResponseView'
+import SurveySubmittedView from './pages/SurveySubmittedView'
 import './styles/application.scss'
 import { User } from "./types"
 
@@ -46,7 +47,8 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/surveys" component={SurveyListView} />
           <Route exact path="/surveys/:id" component={SurveyDetailView} />
-          <Route exact path="/surveys/:id/response" component={SurveyResponseView} />
+          <Route exact path="/surveys/:id/surveyResponse" component={SurveyResponseView} />
+          <Route exact path="/surveys/:id/surveySubmitted" component={SurveySubmittedView} />
         </Switch>
 
       </Router>

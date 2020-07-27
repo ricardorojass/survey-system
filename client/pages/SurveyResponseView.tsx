@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Survey, SurveyResponse, Answer } from '../types';
 
 import produce from 'immer'
 import surveysService from '../services/surveysService';
 import QuestionResponse from '../components/QuestionResponse';
-import answersService from '../services/answersService';
+import surveyResponseService from '../services/responsesService';
 
 interface State {
   loading?: boolean
@@ -25,8 +25,7 @@ const initialState = {
   survey: { questions: [] },
   answers: {}
 }
-
-export default class SurveyResponseView extends React.Component<RouteComponentProps<Props>, State> {
+class SurveyResponseView extends React.Component<RouteComponentProps<Props>, State> {
   surveyId: string
 
   constructor(props: RouteComponentProps<Props>) {
@@ -118,14 +117,6 @@ export default class SurveyResponseView extends React.Component<RouteComponentPr
     }
   }
 
-  getResponseID = async () => {
-    try {
-      let responseId = await surveysService.getSurveyResponseId(this.surveyId)
-      this.setState({response: { id: Number(responseId) } })
-    } catch (e) {
-      
-    }
-  }
 
   handleOptionChange = (questionId: number, optionId: number) => {
     this.setState(state => ({
@@ -133,10 +124,14 @@ export default class SurveyResponseView extends React.Component<RouteComponentPr
     }))
   }
   
-  handleSubmit = async formSubmitEvent => {
-    formSubmitEvent.preventDefault()
-    console.log('submit');
-    
+  handleSubmit = async e => {
+    e.preventDefault()
+    const answers: Answer[] = Object.values(this.state.answers)
+    await surveyResponseService.create(this.surveyId, answers)
+    const url = `/surveys/${this.surveyId}/surveySubmitted`
+    this.props.history.push(url)
   }
 
 }
+
+export default withRouter(SurveyResponseView)

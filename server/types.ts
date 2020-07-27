@@ -50,3 +50,11 @@ export interface SurveyResponse {
   createdAt?: Date
   updatedAt?: Date
 }
+
+export interface Answer {
+  id?: number
+  responseId?: number
+  optionId?: number
+  createdAt?: Date
+  updatedAt?: Date
+}
