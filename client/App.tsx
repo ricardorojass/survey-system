@@ -46,8 +46,8 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/surveys" component={SurveyListView} />
-          <Route exact path="/surveys/:id" component={SurveyDetailView} />
-          <Route exact path="/surveys/:id/surveyResponse" component={SurveyResponseView} />
+          <Route exact path="/surveys/:id/edit" component={SurveyDetailView} />
+          <Route exact path="/surveys/:id/edit/surveyResponse" component={SurveyResponseView} />
           <Route exact path="/surveys/:id/surveySubmitted" component={SurveySubmittedView} />
         </Switch>
 
