@@ -1,10 +1,9 @@
-import knex from 'knex'
+import db from '../db'
 const { Model } = require('objection')
-const knexConfig = require('../../knexfile')
 const SurveyModel = require('./survey')
 const AnswerModel = require('./answer')
 
-Model.knex(knex(knexConfig.development))
+Model.knex(db)
 
 class ResponseModel extends Model {
   

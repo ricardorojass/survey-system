@@ -1,4 +1,3 @@
-const { db } = require('../db')
 import { User } from '../types'
 const UserModel = require('../models/user')
 
