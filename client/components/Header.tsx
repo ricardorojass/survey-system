@@ -31,32 +31,17 @@ class Header extends React.Component<RouteComponentProps, State> {
   }
 
   render() {
-    const { isSurveysListView, isSurveyEditMode, isSurveyResponseORSubmittedView } = this.state
+    const { isAuthenticated, isSurveysListView, isSurveyEditMode, isSurveyResponseORSubmittedView } = this.state
 
     if (isSurveyResponseORSubmittedView) {
       return ( null ) 
     }
 
-    if (isSurveysListView) {
-      return (
-        <header className="bg-indigo-100">
-        <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
-          <button onClick={this.toggleModal}>
-            <img className="fill-current w-12" src="/icons/add-solid.svg"/>
-          </button>
-          <CreateSurveyModal />
-          <div>
-            <span className="pl-4">
-              { this.state.isAuthenticated ? <a onClick={this.logout} href="#">Logout</a> : <a onClick={this.login} href="#">Sign in</a> }
-            </span>
-          </div>
-
-        </div>
-      </header>
-      )
+    if (!isAuthenticated) {
+      return ( null ) 
     }
 
-    if (isSurveyEditMode) {
+    if (isAuthenticated && isSurveyEditMode) {
       return (
         <header className="bg-indigo-100">
         <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
@@ -75,6 +60,25 @@ class Header extends React.Component<RouteComponentProps, State> {
           </div>
         </div>
       </header>
+      )
+    }
+
+    if (isAuthenticated && isSurveysListView) {
+      return (
+        <header className="bg-indigo-100">
+          <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
+            <button onClick={this.toggleModal}>
+              <img className="fill-current w-12" src="/icons/add-solid.svg"/>
+            </button>
+            <CreateSurveyModal />
+            <div>
+              <span className="pl-4">
+                { this.state.isAuthenticated ? <a onClick={this.logout} href="#">Logout</a> : <a onClick={this.login} href="#">Sign in</a> }
+              </span>
+            </div>
+
+          </div>
+        </header>
       )
     }
     // TODO: Return default UI
