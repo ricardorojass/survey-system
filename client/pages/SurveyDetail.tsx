@@ -7,6 +7,7 @@ import SurveyTitle from '../components/SurveyTitle'
 import QuestionComponent from '../components/Question';
 import questionsService from '../services/questionsService';
 import optionsService from '../services/optionsService';
+import HeaderEdit from '../components/HeaderEdit';
 
 interface State {
   loading?: boolean
@@ -39,39 +40,42 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   render() {
     const { loading, error, survey } = this.state
     return (
-      <div className="bg-gray-100 h-auto">
-        <div className="flex">
-          <div className="mx-auto p-4 mt-6 w-6/12">
-            <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
-              <form>
-                <SurveyTitle
-                  title={survey.title}
-                  description={survey.description}
-                  onFieldChange={this.updateSurveyField} />
+      <>
+        <HeaderEdit />
+        <div className="bg-gray-100 h-auto">
+          <div className="flex">
+            <div className="mx-auto p-4 mt-6 w-6/12">
+              <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
+                <form>
+                  <SurveyTitle
+                    title={survey.title}
+                    description={survey.description}
+                    onFieldChange={this.updateSurveyField} />
 
-                <button
-                  className="btn btn-primary btn-block mt-3"
-                  type="button"
-                  onClick={this.createQuestion}>
-                    Add question
-                </button>
+                  <button
+                    className="btn btn-primary btn-block mt-3"
+                    type="button"
+                    onClick={this.createQuestion}>
+                      Add question
+                  </button>
 
-                { survey.questions.map(question => (
-                    <QuestionComponent
-                      key={question.id}
-                      question={question}
-                      onDeleteQuestion={this.handleDeleteQuestion}
-                      onUpdateQuestion={this.handleUpdateQuestion}
-                      onUpdateOption={this.handleUpdateOption}
-                      onAddOption={this.handleAddOption}
-                      onDeleteOption={this.handleDeleteOption}/>
-                  )) }
-              </form>
+                  { survey.questions.map(question => (
+                      <QuestionComponent
+                        key={question.id}
+                        question={question}
+                        onDeleteQuestion={this.handleDeleteQuestion}
+                        onUpdateQuestion={this.handleUpdateQuestion}
+                        onUpdateOption={this.handleUpdateOption}
+                        onAddOption={this.handleAddOption}
+                        onDeleteOption={this.handleDeleteOption}/>
+                    )) }
+                </form>
 
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     )
   }
 

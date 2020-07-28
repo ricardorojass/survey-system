@@ -1,8 +1,10 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import authService from '../services/auth'
+import surveyUIService from '../services/surveyUIService'
 import { User } from '../types'
 
+import ShareModal from './ShareModal'
 
 interface State {
   isAuthenticated?: boolean
@@ -24,23 +26,25 @@ class Header extends React.Component<RouteComponentProps, State> {
   render() {
     const { isAuthenticated} = this.state
 
-    if (isAuthenticated) {
-      return (
-        <header className="bg-indigo-100">
-          <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
-            <div className="text-2xl">Zurveys.xyz</div>
-            <div>
-              <span className="pl-4">
-                { this.state.isAuthenticated ? <a onClick={this.logout} href="#">Logout</a> : <a onClick={this.login} href="#">Sign in</a> }
-              </span>
-            </div>
-          </div>
-        </header>
-      )
-    }
+    return (
+      <header className="bg-indigo-100">
+      <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
+        <span className="text-2xl text-center">Edit your survey</span>
 
-    return ( null )
-    // TODO: Return default UI
+        <div>
+          <button
+            className="bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4"
+            onClick={this.showShareModal}>
+            Share
+          </button>
+          <ShareModal />
+          <span className="pl-4">
+            { isAuthenticated ? <a onClick={this.logout} href="#">Logout</a> : <a onClick={this.login} href="#">Sign in</a> }
+          </span>
+        </div>
+      </div>
+    </header>
+    )
   }
 
   login = (e) => {
@@ -52,6 +56,10 @@ class Header extends React.Component<RouteComponentProps, State> {
 
     authService.logout()
     this.props.history.push('/login')
+  }
+
+  showShareModal = () => {
+    surveyUIService.openShareModal()
   }
 
 }
