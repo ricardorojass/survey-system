@@ -98,7 +98,6 @@ class SurveyModal extends React.Component<RouteComponentProps, State> {
     try {
       const { title, description } = this.state
       const survey = await surveysService.create(title, description)
-      
 
       this.redirectToSurveyDetail(survey.data.id)
       this.closeModal()

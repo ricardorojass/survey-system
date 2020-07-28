@@ -40,7 +40,6 @@ const App = () => {
   return (
     <React.Fragment>
       <Router>
-        { authenticated ? <Header /> : null }
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
