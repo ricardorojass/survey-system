@@ -8,6 +8,7 @@ import QuestionComponent from '../components/Question';
 import questionsService from '../services/questionsService';
 import optionsService from '../services/optionsService';
 import HeaderEdit from '../components/HeaderEdit';
+import Loading from '../components/Loading'
 
 interface State {
   loading?: boolean
@@ -39,10 +40,13 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
 
   render() {
     const { loading, error, survey } = this.state
+
+    if (loading) return <Loading />
+
     return (
       <>
         <HeaderEdit />
-        <div className="bg-gray-100 h-auto">
+        <div className="bg-gray-100 min-h-screen">
           <div className="flex">
             <div className="mx-auto p-4 mt-6 w-6/12">
               <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">

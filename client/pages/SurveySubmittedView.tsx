@@ -17,7 +17,7 @@ class SurveySubmittedView extends React.Component<RouteComponentProps, State> {
 
   render() {
     return (
-      <div className="bg-gray-100 h-auto">
+      <div className="bg-gray-100 min-h-screen">
         <div className="flex">
           <div className="mx-auto p-4 mt-6 w-6/12">
             <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">

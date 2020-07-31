@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Survey, SurveyResponse, Answer } from '../types';
+import { Survey, Answer } from '../types';
 
-import produce from 'immer'
 import surveysService from '../services/surveysService';
 import QuestionResponse from '../components/QuestionResponse';
 import surveyResponseService from '../services/responsesService';
+
+import Loading from '../components/Loading'
 
 interface State {
   loading?: boolean
@@ -54,6 +55,8 @@ class SurveyResponseView extends React.Component<RouteComponentProps<Props>, Sta
   render() {
     const { loading, error, info, survey } = this.state
 
+    if (loading) return <Loading />
+
     if (error) {
       return (
         <div className="error-boundary">
@@ -65,7 +68,7 @@ class SurveyResponseView extends React.Component<RouteComponentProps<Props>, Sta
       )
     }
     return (
-      <div className="bg-gray-100 h-auto">
+      <div className="bg-gray-100 min-h-screen">
         <div className="flex">
           <div className="mx-auto p-4 mt-6 w-6/12">
             <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
