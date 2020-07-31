@@ -30,11 +30,14 @@ export default class SurveyListView extends React.Component<RouteComponentProps,
   }
   
   render() {
+    const { loading, error, surveys, showModal } = this.state
+
+    if (loading) return <Loading />
 
     return (
       <>
         <Header />
-        <div className="bg-gray-100 h-auto">
+        <div className="bg-gray-100 min-h-screen">
 
           <div className="pt-4 pl-6">
             <button onClick={this.openModal}>
@@ -45,7 +48,7 @@ export default class SurveyListView extends React.Component<RouteComponentProps,
           <section className="flex-grow flex justify-center items-center">
             <div className="mx-auto px-4 sm:px-8 py-2 mt-6">
               <div className="grid grid-cols-6 gap-4 items-start mt-8 mx-auto px-8">
-                { this.state.surveys.map(survey =>
+                { surveys.map(survey =>
                   <SurveySummary key={survey.id} survey={survey} />
                 )}
               </div>
