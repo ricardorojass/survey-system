@@ -11,9 +11,13 @@ const findByEmail = async (email: string): Promise<User> => {
   return user
 }
 
-const create = async (user: User): Promise<User> => {
-  const record = await UserModel.query().insert(user)
-  return record
+const create = async (user: User): Promise<any> => {
+  try {
+    const [record] = await UserModel.query().insert(user)
+    return record
+  } catch (e) {
+    return e
+  }
 }
 
 export default {

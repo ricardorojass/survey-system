@@ -10,7 +10,6 @@ export interface User {
   name?: string
   email?: string
   password?: string
-  createdAt?: Date
   token?: string
   loaded?: boolean
 }

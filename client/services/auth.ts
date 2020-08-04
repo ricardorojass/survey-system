@@ -34,7 +34,6 @@ class AuthService extends Store<User> {
 
   async signup(user: User) {
     const response = await axios.post(SIGNUP_URI, user)
-    
     const { token } = response.data
     localStorage.setItem("token", token)
     this.setState({ name: user.name, email: user.email, token, loaded: true })
