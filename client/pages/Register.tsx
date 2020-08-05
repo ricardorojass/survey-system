@@ -96,7 +96,7 @@ class Register extends React.Component<RouteComponentProps, State> {
     switch (name) {
       case 'name':
         errors.name =
-          value.length < 5
+          value.length < 3
             ? 'Full Name must be at least 5 characters long!'
             : ''
         break
@@ -135,7 +135,7 @@ class Register extends React.Component<RouteComponentProps, State> {
           let errors = this.state.errors
           errors.email = data.email[0].message
           errors.name = data.name[0].message
-          this.setState({ errors })
+          this.setState({ errors, name: null, email: null, password: null })
         }
 
       }

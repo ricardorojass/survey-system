@@ -10,8 +10,7 @@ const findSurveyById = async (surveyId: string): Promise<Survey> => {
 }
 
 const findAllByUser = async (userId: number): Promise<Array<Survey>> => {
-  return await db("surveys")
-    .where({ userId })
+  return await db("surveys").where({ userId })
 }
 
 const create = async (survey: Survey): Promise<Survey>  => {
