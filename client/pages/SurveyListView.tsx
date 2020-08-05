@@ -28,7 +28,7 @@ export default class SurveyListView extends React.Component<RouteComponentProps,
   async componentDidMount() {
     await this.fetchSurveys()
   }
-  
+
   render() {
     const { loading, error, surveys, showModal } = this.state
 

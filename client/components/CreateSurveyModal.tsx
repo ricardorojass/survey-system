@@ -15,7 +15,7 @@ class SurveyModal extends React.Component<RouteComponentProps, State> {
   constructor(props: any) {
     super(props)
 
-    this.state = { title: null, description: null, showModal: false, error: null}
+    this.state = { title: '', description: '', showModal: false, error: null}
     surveyUIService.subscribe((_: boolean) => {
       this.setState({ showModal: surveyUIService.isSurveyModalOpen() })
     })

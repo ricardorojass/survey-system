@@ -25,14 +25,14 @@ export async function login(req: any, res: any, next: any) {
 export async function signup(req: any, res: any, next: any) {
   try {
     const { email, password, name } = req.body
-    let user: User = { email, password, name }
+    let user = { email, password, name }
     user.password = await bcrypt.hash(password, 10)
     const response = await usersService.create(user)
 
-    if (response.statusCode === 400) {
+    if (response && response.statusCode === 400) {
       res.status(400).json({ response })
     } else {
-      const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || "secretcode")
+      const token = jwt.sign({ userId: response.id }, process.env.SECRET_KEY || "secretcode")
       res.json({ token })
     }
   } catch (e) {
@@ -43,6 +43,7 @@ export async function signup(req: any, res: any, next: any) {
 export async function getUser(req: any, res: any, next: any) {
   try {
     const { name, email } = res.locals.user;
+
     res.json({ name, email })
   } catch (e) {
     next(e)

@@ -9,17 +9,18 @@ export async function getSurvey(req: Request, res: Response, next: any) {
     const survey: Survey = await surveysService.findSurveyById(id)
     res.json(survey)
   } catch (error) {
-    
+
   }
 }
 
-export async function getSurveys(req: any, res: any, next: any) {
+export async function getSurveys(req: Request, res: Response, next: any) {
   try {
     const user = res.locals.user
     const surveys = await surveysService.findAllByUser(user.id)
     res.json(surveys)
-  } catch (error) {
-    
+  } catch (e) {
+    console.log('error', e);
+
   }
 }
 

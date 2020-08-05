@@ -6,7 +6,7 @@ const SurveyModel = require('./survey')
 Model.knex(db)
 
 class UserModel extends Model {
-  
+
   static get tableName() {
     return 'users'
   }
