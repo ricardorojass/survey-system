@@ -1,9 +1,14 @@
 import axios from '../axios'
-import { Option, Answer } from '../types'
+import { Option, Answer, SurveyResponse } from '../types'
+
+async function list(surveyId: string): Promise<SurveyResponse[]> {
+  const response = await axios.get(`/surveys/${surveyId}/responses`)
+  return response.data
+}
 
 async function create(surveyId: string, answers: Answer[]): Promise<Answer> {
   console.log(surveyId, answers);
-  
+
   const response = await axios.post(`/surveys/${surveyId}/response`, answers)
   return response.data
 }
@@ -18,6 +23,7 @@ async function deleteById(optionId: number): Promise<any> {
 }
 
 export default {
+  list,
   create,
   update,
   deleteById,

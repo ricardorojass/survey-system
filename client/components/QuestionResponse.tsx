@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Question } from '../types'
 
 interface Props {
@@ -8,8 +8,7 @@ interface Props {
 }
 
 const QuestionResponse = ({ question, onUpdateQuestion, selectedOption }: Props) => {
-  console.log('Q comp', question);
-  
+
   return (
     <section className="bg-white shadow-lg mt-10">
       <div className="px-6 pt-4">
@@ -33,7 +32,7 @@ const QuestionResponse = ({ question, onUpdateQuestion, selectedOption }: Props)
         )}
         {/*end body*/}
       </div>
-    </section>  
+    </section>
   )
 
 }

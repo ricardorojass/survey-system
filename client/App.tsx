@@ -6,7 +6,6 @@ import {
 } from "react-router-dom"
 
 import authService from './services/auth'
-import Header from './components/Header'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'

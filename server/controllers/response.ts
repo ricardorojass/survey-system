@@ -2,6 +2,21 @@ import { SurveyResponse, Answer } from 'server/types'
 import { Request, Response } from 'express'
 import responseService from '../services/responses'
 
+export async function getResponses(req: Request, res: Response, next: any) {
+  try {
+    const { surveyId } = req.params
+    const responses = await responseService.findAllBySurveyId(Number(surveyId))
+    res.json(responses)
+  } catch (e) {
+    if (e) {
+      res.status(422)
+      throw new Error('Responses cannot be found')
+    } else {
+      next(e)
+    }
+  }
+}
+
 export async function createResponse(req: Request, res: Response, next: any) {
   try {
     const surveyId = Number(req.params.id)
@@ -27,7 +42,7 @@ export async function findResponseById(req: Request, res: Response, next: any) {
   } catch (e) {
     if (e) {
       res.status(422).json(e)
-      throw new Error('Response cannot be created')
+      throw new Error('Response cannot be found')
     } else {
       next(e)
     }
