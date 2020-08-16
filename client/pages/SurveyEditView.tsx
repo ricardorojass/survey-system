@@ -3,7 +3,7 @@ import HeaderEdit from '../components/HeaderEdit';
 import QuestionsComponent from '../components/QuestionsComponent'
 import Responses from '../components/Responses'
 
-const SurveyDetailView = (props) => {
+const SurveyEditView = (props) => {
   const [active, setActive] = useState('questions')
   const questionsTab = 'questions'
   const responsesTab = 'responses'
@@ -19,7 +19,7 @@ const SurveyDetailView = (props) => {
   return (
     <>
       <HeaderEdit />
-      <nav className="bg-indigo-100">
+      <nav className="bg-white">
         <ul className="flex justify-center pt-4 pb-1 border-b">
           <li className="mr-6">
             <a
@@ -49,4 +49,4 @@ const SurveyDetailView = (props) => {
   )
 }
 
-export default SurveyDetailView
+export default SurveyEditView

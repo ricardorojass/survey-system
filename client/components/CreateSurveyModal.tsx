@@ -99,7 +99,7 @@ class SurveyModal extends React.Component<RouteComponentProps, State> {
       const { title, description } = this.state
       const survey = await surveysService.create(title, description)
 
-      this.redirectToSurveyDetail(survey.data.id)
+      this.redirectToSurveyEdit(survey.data.id)
       this.closeModal()
     } catch (e) {
       console.log('error------');
@@ -110,7 +110,7 @@ class SurveyModal extends React.Component<RouteComponentProps, State> {
     surveyUIService.closeSurveyModal()
   }
 
-  redirectToSurveyDetail(surveyId: number) {
+  redirectToSurveyEdit(surveyId: number) {
     this.props.history.push(`/surveys/${surveyId}/edit`)
   }
 

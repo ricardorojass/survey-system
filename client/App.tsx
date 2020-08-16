@@ -10,7 +10,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import SurveyListView from './pages/SurveyListView'
-import SurveyDetailView from './pages/SurveyDetail'
+import SurveyEditView from './pages/SurveyEditView'
 import SurveyResponseView from './pages/SurveyResponseView'
 import SurveySubmittedView from './pages/SurveySubmittedView'
 import './styles/application.scss'
@@ -44,7 +44,7 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/surveys" component={SurveyListView} />
-          <Route exact path="/surveys/:id/edit" component={SurveyDetailView} />
+          <Route exact path="/surveys/:id/edit" component={SurveyEditView} />
           <Route exact path="/surveys/:id/edit/surveyResponse" component={SurveyResponseView} />
           <Route exact path="/surveys/:id/surveySubmitted" component={SurveySubmittedView} />
         </Switch>

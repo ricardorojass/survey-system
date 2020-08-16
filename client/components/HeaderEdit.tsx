@@ -27,7 +27,7 @@ class Header extends React.Component<RouteComponentProps, State> {
     const { isAuthenticated} = this.state
 
     return (
-      <header className="bg-indigo-100">
+      <header className="bg-white">
       <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
         <span className="text-2xl text-center">Edit your survey</span>
 

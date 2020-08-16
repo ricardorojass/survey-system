@@ -1,28 +1,45 @@
 import axios from '../axios'
-import { Survey, SurveyResponse } from '../types'
+import { Survey, SurveyResponse, Question } from '../types'
+import Store from '../store'
 
-async function list(): Promise<Survey[]> {
-  const response = await axios.get('/surveys')
-  return response.data
+function initialState() {
+  return {
+    currentSurvey: null,
+    questions: null,
+    loaded: null,
+  }
 }
 
-async function fetchSurvey(id: string): Promise<Survey> {
-  const response = await axios.get(`/surveys/${id}`)
-  return response.data
+interface SurveyState {
+  currentSurvey?: Survey
+  questions?: Question[]
+  loaded?: boolean
+}
+class SurveyService extends Store<SurveyState> {
+
+  async list(): Promise<Survey[]> {
+    const response = await axios.get('/surveys')
+    return response.data
+  }
+
+  async fetchSurvey(id: string) {
+    const response = await axios.get(`/surveys/${id}`)
+    this.setState({
+      currentSurvey: response.data,
+      questions: response.data.questions,
+      loaded: true
+    })
+  }
+
+  async create(title: string, description: string): Promise<any> {
+    const survey: Survey = { title: title, description: description, headerUrl: '', themeColor: '', backgroundColor: '', fontStyle: '' }
+    return await axios.post('/surveys', survey)
+  }
+
+  async update(surveyId: string, survey: Survey): Promise<Survey> {
+    return await axios.put(`/surveys/${surveyId}`, survey)
+  }
+
 }
 
-async function create(title: string, description: string): Promise<any> {
-  const survey: Survey = { title: title, description: description, headerUrl: '', themeColor: '', backgroundColor: '', fontStyle: '' }
-  return await axios.post('/surveys', survey)
-}
-
-async function update(surveyId: string, survey: Survey): Promise<Survey> {
-  return await axios.put(`/surveys/${surveyId}`, survey)
-}
-
-export default {
-  fetchSurvey,
-  list,
-  create,
-  update
-}
+export default new SurveyService(initialState())

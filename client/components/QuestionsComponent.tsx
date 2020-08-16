@@ -45,35 +45,33 @@ export default class QuestionsComponent extends React.Component<RouteComponentPr
     return (
       <>
         <div className="bg-gray-100 min-h-screen">
-          <div className="flex">
-            <div className="mx-auto p-4 mt-6 w-6/12">
-              <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
-                <form>
-                  <SurveyTitle
-                    title={survey.title}
-                    description={survey.description}
-                    onFieldChange={this.updateSurveyField} />
+          <div className="mx-auto p-4 w-6/12 sm:w-auto">
+            <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
+              <form>
+                <SurveyTitle
+                  title={survey.title}
+                  description={survey.description}
+                  onFieldChange={this.updateSurveyField} />
 
-                  <button
-                    className="btn btn-primary btn-block mt-3"
-                    type="button"
-                    onClick={this.createQuestion}>
-                      Add question
-                  </button>
+                <button
+                  className="btn btn-primary btn-block mt-3"
+                  type="button"
+                  onClick={this.createQuestion}>
+                    Add question
+                </button>
 
-                  { survey.questions.map(question => (
-                      <QuestionComponent
-                        key={question.id}
-                        question={question}
-                        onDeleteQuestion={this.handleDeleteQuestion}
-                        onUpdateQuestion={this.handleUpdateQuestion}
-                        onUpdateOption={this.handleUpdateOption}
-                        onAddOption={this.handleAddOption}
-                        onDeleteOption={this.handleDeleteOption}/>
-                    )) }
-                </form>
+                { survey.questions.map(question => (
+                    <QuestionComponent
+                      key={question.id}
+                      question={question}
+                      onDeleteQuestion={this.handleDeleteQuestion}
+                      onUpdateQuestion={this.handleUpdateQuestion}
+                      onUpdateOption={this.handleUpdateOption}
+                      onAddOption={this.handleAddOption}
+                      onDeleteOption={this.handleDeleteOption}/>
+                  )) }
+              </form>
 
-              </div>
             </div>
           </div>
         </div>
@@ -174,7 +172,8 @@ export default class QuestionsComponent extends React.Component<RouteComponentPr
 
   fetchSurvey = async () => {
     try {
-      let survey: Survey = await surveysService.fetchSurvey(this.surveyId)
+      await surveysService.fetchSurvey(this.surveyId)
+      const survey: Survey = surveysService.getState().currentSurvey
 
       this.setState({
         loading: false,
