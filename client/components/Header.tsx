@@ -26,7 +26,7 @@ class Header extends React.Component<RouteComponentProps, State> {
 
     if (isAuthenticated) {
       return (
-        <header className="bg-indigo-100">
+        <header className="bg-white">
           <div className="flex justify-between items-center text-indigo-700 pt-4 pb-4 px-6">
             <div className="text-2xl">Zurveys.xyz</div>
             <div>

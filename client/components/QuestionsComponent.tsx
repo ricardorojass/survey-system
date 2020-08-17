@@ -3,12 +3,11 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Survey, Question, Option } from '../types';
 
 import surveysService from '../services/surveysService';
-import SurveyTitle from '../components/SurveyTitle'
-import QuestionComponent from '../components/Question';
+import SurveyTitle from './SurveyTitle'
+import QuestionComponent from './Question';
 import questionsService from '../services/questionsService';
 import optionsService from '../services/optionsService';
-import HeaderEdit from '../components/HeaderEdit';
-import Loading from '../components/Loading'
+import Loading from './Loading'
 
 interface State {
   loading?: boolean
@@ -20,17 +19,17 @@ interface Props {
   id?: string
 }
 
-export default class SurveyDetailView extends React.Component<RouteComponentProps<Props>, State> {
+export default class QuestionsComponent extends React.Component<RouteComponentProps<Props>, State> {
   surveyId: string
 
   constructor(props: RouteComponentProps<Props>) {
     super(props)
-    
-    this.state = { 
+
+    this.state = {
       loading: true,
       error: null,
       survey: { questions: [] },
-    } 
+    }
     this.surveyId = props.match.params.id
   }
 
@@ -45,37 +44,34 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
 
     return (
       <>
-        <HeaderEdit />
         <div className="bg-gray-100 min-h-screen">
-          <div className="flex">
-            <div className="mx-auto p-4 mt-6 w-6/12">
-              <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
-                <form>
-                  <SurveyTitle
-                    title={survey.title}
-                    description={survey.description}
-                    onFieldChange={this.updateSurveyField} />
+          <div className="mx-auto p-4 w-6/12 sm:w-auto">
+            <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
+              <form>
+                <SurveyTitle
+                  title={survey.title}
+                  description={survey.description}
+                  onFieldChange={this.updateSurveyField} />
 
-                  <button
-                    className="btn btn-primary btn-block mt-3"
-                    type="button"
-                    onClick={this.createQuestion}>
-                      Add question
-                  </button>
+                <button
+                  className="btn btn-primary btn-block mt-3"
+                  type="button"
+                  onClick={this.createQuestion}>
+                    Add question
+                </button>
 
-                  { survey.questions.map(question => (
-                      <QuestionComponent
-                        key={question.id}
-                        question={question}
-                        onDeleteQuestion={this.handleDeleteQuestion}
-                        onUpdateQuestion={this.handleUpdateQuestion}
-                        onUpdateOption={this.handleUpdateOption}
-                        onAddOption={this.handleAddOption}
-                        onDeleteOption={this.handleDeleteOption}/>
-                    )) }
-                </form>
+                { survey.questions.map(question => (
+                    <QuestionComponent
+                      key={question.id}
+                      question={question}
+                      onDeleteQuestion={this.handleDeleteQuestion}
+                      onUpdateQuestion={this.handleUpdateQuestion}
+                      onUpdateOption={this.handleUpdateOption}
+                      onAddOption={this.handleAddOption}
+                      onDeleteOption={this.handleDeleteOption}/>
+                  )) }
+              </form>
 
-              </div>
             </div>
           </div>
         </div>
@@ -93,9 +89,9 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
 
   createQuestion = async (e) => {
     e.preventDefault()
-    
+
     const questionBody: Question = {
-      surveyId: this.surveyId, 
+      surveyId: this.surveyId,
       title: 'Untitled question',
       options: [{ description: 'Option 1'}]
     }
@@ -161,7 +157,7 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   }
 
   handleDeleteOption = (questionId: number, optionId: number) => {
-    
+
     this.setState(state => {
       const questions = state.survey.questions.map(question => {
         if (question.id === questionId) {
@@ -177,13 +173,11 @@ export default class SurveyDetailView extends React.Component<RouteComponentProp
   fetchSurvey = async () => {
     try {
       let survey: Survey = await surveysService.fetchSurvey(this.surveyId)
-      console.log('first state', survey);
-      
+
       this.setState({
         loading: false,
         survey: survey
       })
-      console.log('state: ', this.state.survey);
     } catch (e) {
       console.log(e);
       this.setState({ loading: false, error: e })

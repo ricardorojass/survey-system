@@ -23,6 +23,7 @@ router.put('/surveys/:id', requireUser, survey.updateSurvey)
 
 // Responses
 router.post('/surveys/:id/response', requireUser, surveyResponse.createResponse)
+router.get('/surveys/:surveyId/responses', requireUser, surveyResponse.getResponses)
 
 // Questions
 router.post('/surveys/:id/questions', requireUser, question.createQuestion)

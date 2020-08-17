@@ -31,7 +31,7 @@ class SurveyResponseView extends React.Component<RouteComponentProps<Props>, Sta
 
   constructor(props: RouteComponentProps<Props>) {
     super(props)
-    
+
     this.state = initialState
     this.reset = this.reset.bind(this)
     this.surveyId = props.match.params.id
@@ -45,7 +45,7 @@ class SurveyResponseView extends React.Component<RouteComponentProps<Props>, Sta
     // TODO: do something about the error
     console.log('componentDidCatch', error, info);
     this.setState({ error: error, info: info })
-    
+
   }
 
   reset() {
@@ -104,11 +104,11 @@ class SurveyResponseView extends React.Component<RouteComponentProps<Props>, Sta
     )
   }
 
-  
+
   fetchSurvey = async () => {
     try {
       let survey: Survey = await surveysService.fetchSurvey(this.surveyId)
-      
+
       this.setState({
         loading: false,
         survey: survey
@@ -126,7 +126,7 @@ class SurveyResponseView extends React.Component<RouteComponentProps<Props>, Sta
       answers: { ...state.answers, [questionId]: optionId }
     }))
   }
-  
+
   handleSubmit = async e => {
     e.preventDefault()
     const answers: Answer[] = Object.values(this.state.answers)
