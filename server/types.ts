@@ -58,3 +58,16 @@ export interface Answer {
   createdAt?: Date
   updatedAt?: Date
 }
+
+export interface AnswerFromUser {
+  questionId?: number
+  questionTitle?: string
+  numResponses?: number
+  options?: OptionFromUser[]
+}
+
+export interface OptionFromUser {
+  id?: number
+  descrption?: string
+  numAnswers?: number
+}

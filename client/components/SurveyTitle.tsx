@@ -11,11 +11,11 @@ class SurveyTitle extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
   }
-  
+
   render() {
     const { title, description, onFieldChange } = this.props
     return (
-      <section className="bg-white shadow-lg">
+      <section className="bg-white border-cards">
         <div className="px-6 py-4">
           <div className="form-group">
             <textarea

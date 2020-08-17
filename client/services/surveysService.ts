@@ -21,9 +21,15 @@ async function update(surveyId: string, survey: Survey): Promise<Survey> {
   return await axios.put(`/surveys/${surveyId}`, survey)
 }
 
+async function getAnswersFromUsers(surveyId: string): Promise<SurveyResponse[]> {
+  const response = await axios.get(`/surveys/${surveyId}/responses`)
+  return response.data
+}
+
 export default {
   fetchSurvey,
   list,
   create,
-  update
+  update,
+  getAnswersFromUsers,
 }

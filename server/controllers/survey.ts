@@ -57,3 +57,19 @@ export async function updateSurvey(req: Request, res: Response, next: any) {
     }
   }
 }
+
+export async function getAnswersFromUsers(req: Request, res: Response, next: any) {
+  try {
+    const { surveyId } = req.params
+    const responses = await surveysService.getAnswersFromUsers(Number(surveyId))
+    res.json(responses)
+  } catch (e) {
+    if (e) {
+      console.log('erorr---------', e);
+
+      res.status(422)
+    } else {
+      next(e)
+    }
+  }
+}

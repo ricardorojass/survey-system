@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import HeaderEdit from '../components/HeaderEdit';
-import QuestionsComponent from '../components/QuestionsComponent'
-import Responses from '../components/Responses'
+import QuestionsView from './QuestionsView'
+import ResponsesView from './ResponsesView'
 
 const SurveyEditView = (props) => {
   const [active, setActive] = useState('questions')
@@ -41,9 +41,9 @@ const SurveyEditView = (props) => {
       </nav>
       { active === questionsTab
         ?
-        <QuestionsComponent {...props}/>
+        <QuestionsView {...props}/>
         :
-        <Responses {...props}/>
+        <ResponsesView {...props}/>
       }
     </>
   )
