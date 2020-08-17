@@ -107,9 +107,7 @@ class SurveyResponseView extends React.Component<RouteComponentProps<Props>, Sta
 
   fetchSurvey = async () => {
     try {
-      await surveysService.fetchSurvey(this.surveyId)
-      const survey = surveysService.getState()
-      console.log('survey state', survey)
+      let survey: Survey = await surveysService.fetchSurvey(this.surveyId)
 
       this.setState({
         loading: false,

@@ -172,8 +172,7 @@ export default class QuestionsComponent extends React.Component<RouteComponentPr
 
   fetchSurvey = async () => {
     try {
-      await surveysService.fetchSurvey(this.surveyId)
-      const survey: Survey = surveysService.getState().currentSurvey
+      let survey: Survey = await surveysService.fetchSurvey(this.surveyId)
 
       this.setState({
         loading: false,
