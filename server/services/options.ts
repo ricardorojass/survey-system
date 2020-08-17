@@ -20,8 +20,21 @@ const deleteById = async (questionId: number): Promise<number>  => {
   return await OptionModel.query().deleteById(questionId)
 }
 
+const optionsByQuestionId = async (questionId: number): Promise<Option[]> => {
+  return await db
+    .select('options.id', 'options.description')
+    .count('answers.id as numAnswers')
+    .from('questions')
+    .leftJoin('options', 'questions.id', 'options.questionId')
+    .leftJoin('answers', 'options.id', 'answers.optionId')
+    .where('questions.id', questionId)
+    .groupBy('options.id', 'options.description')
+    .orderBy('options.id', 'asc')
+}
+
 export default {
   create,
   update,
   deleteById,
+  optionsByQuestionId,
 }

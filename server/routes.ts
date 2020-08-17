@@ -20,10 +20,10 @@ router.get('/surveys', requireUser, survey.getSurveys)
 router.get('/surveys/:id', requireUser, survey.getSurvey)
 router.post('/surveys', requireUser, survey.createSurvey)
 router.put('/surveys/:id', requireUser, survey.updateSurvey)
+router.get('/surveys/:surveyId/responses', requireUser, survey.getAnswersFromUsers)
 
 // Responses
 router.post('/surveys/:id/response', requireUser, surveyResponse.createResponse)
-router.get('/surveys/:surveyId/responses', requireUser, surveyResponse.getResponses)
 
 // Questions
 router.post('/surveys/:id/questions', requireUser, question.createQuestion)

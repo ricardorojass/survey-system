@@ -48,7 +48,10 @@ export interface Option {
 
 export interface SurveyResponse {
   id?: number
-  surveyId?: number
+  questionId?: number
+  questionTitle?: string
+  numAnswers?: number
+  options?: Option[]
   createdAt?: Date
   updatedAt?: Date
 }
@@ -56,5 +59,18 @@ export interface SurveyResponse {
 export interface Answer {
   questionId?: number
   optionId?: number
+}
+
+export interface AnswerFromUser {
+  questionId?: number
+  questionTitle?: string
+  numResponses?: number
+  options?: OptionFromUser[]
+}
+
+export interface OptionFromUser {
+  id?: number
+  descrption?: string
+  numAnswers?: number
 }
 

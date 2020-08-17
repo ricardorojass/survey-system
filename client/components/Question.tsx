@@ -13,7 +13,7 @@ interface Props {
 const QuestionComponent = ({ question, onUpdateQuestion, onDeleteQuestion, onUpdateOption, onAddOption, onDeleteOption }: Props) => {
 
   return (
-    <section className="bg-white shadow-lg mt-10">
+    <section className="bg-white border-cards mt-10">
       <div className="px-6 pt-4">
         {/*body*/}
         <div className="form-group">

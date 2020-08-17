@@ -3,11 +3,11 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Survey, Question, Option } from '../types';
 
 import surveysService from '../services/surveysService';
-import SurveyTitle from './SurveyTitle'
-import QuestionComponent from './Question';
+import SurveyTitle from '../components/SurveyTitle'
+import QuestionComponent from '../components/Question';
 import questionsService from '../services/questionsService';
 import optionsService from '../services/optionsService';
-import Loading from './Loading'
+import Loading from '../components/Loading'
 
 interface State {
   loading?: boolean
@@ -19,7 +19,7 @@ interface Props {
   id?: string
 }
 
-export default class QuestionsComponent extends React.Component<RouteComponentProps<Props>, State> {
+export default class QuestionsView extends React.Component<RouteComponentProps<Props>, State> {
   surveyId: string
 
   constructor(props: RouteComponentProps<Props>) {
@@ -44,8 +44,8 @@ export default class QuestionsComponent extends React.Component<RouteComponentPr
 
     return (
       <>
-        <div className="bg-gray-100 min-h-screen">
-          <div className="mx-auto p-4 w-6/12 sm:w-auto">
+        <div className="bg-indigo-100 min-h-screen">
+          <div className="mx-auto p-4 md:w-8/12 sm:w-auto">
             <div className="grid grid-cols-1 gap-4 mt-8 mx-auto">
               <form>
                 <SurveyTitle
