@@ -61,6 +61,11 @@ export interface Answer {
   optionId?: number
 }
 
+export interface ResponsesSubmitted {
+  numResponsesSubmitted: number,
+  answersFromUsers: AnswerFromUser[]
+}
+
 export interface AnswerFromUser {
   questionId?: number
   questionTitle?: string

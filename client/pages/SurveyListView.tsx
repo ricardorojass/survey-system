@@ -37,7 +37,7 @@ export default class SurveyListView extends React.Component<RouteComponentProps,
     return (
       <>
         <Header />
-        <div className="bg-gray-100 min-h-screen">
+        <div className="bg-indigo-100 min-h-screen">
 
           <div className="pt-4 pl-6">
             <button onClick={this.openModal}>
