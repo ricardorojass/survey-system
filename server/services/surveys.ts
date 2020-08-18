@@ -1,6 +1,8 @@
 import db from '../db'
-import { Survey, AnswerFromUser } from '../types'
+import { Survey, AnswerFromUser, ResponsesSubmitted } from '../types'
 import optionsService from '../services/options'
+import responsesService from '../services/responses'
+
 const SurveyModel = require('../models/survey')
 
 
@@ -15,8 +17,8 @@ const findAllByUser = async (userId: number): Promise<Array<Survey>> => {
   return await db("surveys").where({ userId })
 }
 
-const getAnswersFromUsers = async (surveyId: number): Promise<AnswerFromUser[]> => {
-  const questions =  await db
+const getAnswersFromUsers = async (surveyId: number): Promise<ResponsesSubmitted> => {
+  const answers =  await db
     .select('questions.id as questionId', 'questions.title as questionTitle')
     .count('answers.id as numResponses')
     .from('surveys')
@@ -27,12 +29,19 @@ const getAnswersFromUsers = async (surveyId: number): Promise<AnswerFromUser[]> 
     .groupBy('questions.id', 'questions.title')
     .orderBy('questionId', 'asc')
 
-  for (const question of questions) {
+  for (const question of answers) {
     const optionsResponse = await optionsService.optionsByQuestionId(question.questionId)
     question.options = optionsResponse
   }
 
-  return questions
+  const numResponsesSubmitted = await responsesService.getAmountResponsesBySurveyId(surveyId)
+
+  const responsesSubmitted: ResponsesSubmitted = {
+    numResponsesSubmitted,
+    answersFromUsers: answers
+  }
+
+  return responsesSubmitted
 }
 
 const create = async (survey: Survey): Promise<Survey>  => {
