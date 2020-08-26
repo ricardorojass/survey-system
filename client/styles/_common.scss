@@ -69,3 +69,13 @@ input, textarea {
     color: white;
   }
 }
+
+.tab {
+  button {
+    transition: 0.3s;
+  }
+  button.active {
+    border-bottom: solid theme('colors.indigo.700') 2px;
+    outline: none;
+  }
+}

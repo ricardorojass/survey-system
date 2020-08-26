@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
 import { ResponsesSubmitted  } from '../types'
