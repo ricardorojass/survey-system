@@ -53,27 +53,30 @@ class Register extends React.Component<RouteComponentProps, State> {
                 <input
                   type="text"
                   name="name"
+                  id="name"
                   onChange={this.updateField}/>
                   {errors.name.length > 0 &&
-                    <small className='text-red-700'>{errors.name}</small>}
+                    <small className='text-red-700' id="au-name">{errors.name}</small>}
               </div>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   name="email"
+                  id="email"
                   onChange={this.updateField}/>
                   {errors.email.length > 0 &&
-                    <small className='text-red-700'>{errors.email}</small>}
+                    <small className='text-red-700' id="au-email">{errors.email}</small>}
               </div>
               <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   name="password"
+                  id="password"
                   onChange={this.updateField} />
                   {errors.password.length > 0 &&
-                    <small className='text-red-700'>{errors.password}</small>}
+                    <small className='text-red-700' id="au-password">{errors.password}</small>}
               </div>
 
               <div className="form-actions">
