@@ -11,6 +11,7 @@
     "start:dev": "nodemon --config \"./nodemon.json\"/",
     "start:test": "NODE_ENV=test PORT=4444 nodemon --config \"./nodemon.json\"/",
     "db:seed": "knex seed:run",
+    "db:seed:test": "NODE_ENV=test knex seed:run",
     "db:reset": "npx ts-node db/reset.ts",
     "db:reset:test": "NODE_ENV=test npx ts-node db/reset.ts",
     "db:migrate": "knex migrate:latest",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.10.4",
+    "@cypress/webpack-preprocessor": "^5.4.5",
     "@types/express": "^4.17.7",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.157",
