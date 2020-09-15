@@ -2,10 +2,11 @@ language: node_js
 node_js:
   - 14
 install: npm install
-  stage: test
 services:
   - postgresql
 before_script:
   - psql -c 'create database survey_test;' -U postgres
-  - npm run start:test
-script: npm run cy:run
+script: npm run test:ci
+
+notifications:
+  email: false
