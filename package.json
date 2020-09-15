@@ -18,7 +18,7 @@
     "db:migrate:test": "NODE_ENV=test knex migrate:latest",
     "cy:open": "cypress open",
     "cy:run": "cypress run --config video=false",
-    "test:ci": "start-server-and-test start:test cy:run 8080"
+    "test:ci": "start-server-and-test start:test http-get://localhost:4444 cy:run"
   },
   "keywords": [
     "nodejs",
