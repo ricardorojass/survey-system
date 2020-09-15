@@ -16,8 +16,8 @@
     "db:reset:test": "NODE_ENV=test npx ts-node db/reset.ts",
     "db:migrate": "knex migrate:latest",
     "db:migrate:test": "NODE_ENV=test knex migrate:latest",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "keywords": [
     "nodejs",
