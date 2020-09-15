@@ -3,7 +3,7 @@ describe('Login', function () {
     cy.exec('npm run db:reset:test && npm run db:seed:test')
   })
 
-  it('redirects to login', function() {
+  it('redirects to register', function() {
     cy.visit('/')
     cy.url().should('include', 'register')
   })
