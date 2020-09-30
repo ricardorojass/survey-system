@@ -9,6 +9,7 @@ import authService from './services/auth'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import PrivateRoute from "./PrivateRoute"
 import SurveyListView from './pages/SurveyListView'
 import SurveyEditView from './pages/SurveyEditView'
 import SurveyResponseView from './pages/SurveyResponseView'
@@ -43,8 +44,8 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/surveys" component={SurveyListView} />
-          <Route exact path="/surveys/:id/edit" component={SurveyEditView} />
+          <PrivateRoute exact path="/surveys" component={SurveyListView} />
+          <PrivateRoute exact path="/surveys/:id/edit" component={SurveyEditView} />
           <Route exact path="/surveys/:id/edit/surveyResponse" component={SurveyResponseView} />
           <Route exact path="/surveys/:id/surveySubmitted" component={SurveySubmittedView} />
         </Switch>
