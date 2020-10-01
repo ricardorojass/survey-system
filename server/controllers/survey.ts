@@ -1,5 +1,5 @@
 import surveysService from '../services/surveys'
-import { Survey } from 'server/types'
+import { Survey } from '../types'
 import { Request, Response } from 'express'
 
 export async function getSurvey(req: Request, res: Response, next: any) {
@@ -20,7 +20,6 @@ export async function getSurveys(req: Request, res: Response, next: any) {
     res.json(surveys)
   } catch (e) {
     console.log('error', e);
-
   }
 }
 
