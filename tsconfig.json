@@ -35,6 +35,7 @@
     "emitDecoratorMetadata": true,
     "types": [
       "node",
+      "jest",
       "cypress",
     ]
   },
