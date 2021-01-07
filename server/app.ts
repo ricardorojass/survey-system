@@ -8,10 +8,10 @@ const app = express();
 
 const isDev = process.env.NODE_ENV != 'production'
 
-app.use(cors())
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, '../client')))
 
+app.use(cors())
 app.use(setUser)
 app.use('/api', routes)
 
