@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 import * as  path from 'path'
 import routes from './routes'
 const { setUser } = require('./middlewares')
@@ -7,6 +8,7 @@ const app = express();
 
 const isDev = process.env.NODE_ENV != 'production'
 
+app.use(cors())
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, '../client')))
 
